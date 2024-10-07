@@ -1,0 +1,53 @@
+export const dummyListing = [
+    {
+        id: 1,
+        title: "Title 1",
+        description: "Description 1",
+        date: "2023-01-01",
+        time: "12:00 PM",
+        duration: "1:00 PM",
+        location: "Location 1",
+        image: "https://picsum.photos/id/100/200/300",
+        tags: ["tag1", "tag2", "tag3"],
+    },
+    {
+        id: 2,
+        title: "Title 2",
+        description: "Description 2",
+        date: "2023-01-02",
+        time: "12:00 PM",
+        duration: "1:00 PM",
+        location: "Location 2",
+        image: "https://picsum.photos/id/101/200/300",
+        tags: ["tag1", "tag2", "tag3"],
+    },
+    {
+        id: 3,
+        title: "Title 3",
+        description: "Description 3",
+        date: "2023-01-03",
+        time: "12:00 PM",
+        duration: "1:00 PM",
+        location: "Location 3",
+        image: "https://picsum.photos/id/102/200/300",
+        tags: ["tag1", "tag2", "tag3"],
+    },
+    {
+        id: 4,
+        title: "Title 4",
+        description: "Description 4",
+        date: "2023-01-04",
+        time: "12:00 PM",
+        duration: "1:00 PM",
+        location: "Location 4",
+        image: "https://picsum.photos/id/103/200/300",
+        tags: ["tag1", "tag2", "tag3"],
+    },
+]
+
+export const emptyNote = {
+    title: "Untitled",
+    description: "What's on your mind",
+    position: 'absolute',
+    isScaling: false,
+}

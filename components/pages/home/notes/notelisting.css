@@ -1,0 +1,43 @@
+.card {
+    background-color: #F0EDE5;
+    border-radius: 5px;
+    padding: 5px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    color: #2B2B2B;
+  }
+  
+  .card-title {
+    font-size: 18px;
+    font-weight: bold;
+    color: #556B2F;
+    margin-bottom: 0px;
+  }
+  
+  .card-description {
+    font-size: 14px;
+    color: #8A9A9E;
+  }
+  
+  .card-buttons {
+    display: flex;
+    justify-content: space-between
+  }
+  
+  .card-button {
+    font-size: 14px;
+    padding: 5px 10px;
+    border-radius: 5px;
+    text-decoration: none;
+    cursor: pointer;
+  }
+  
+  .card-button.edit {
+    background-color: #C0C0C0;
+    color: #2B2B2B;
+  }
+  
+  .card-button.delete {
+    background-color: #800020;
+    color: white
+  }
+  
