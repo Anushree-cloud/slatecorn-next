@@ -1,20 +1,7 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
-
-:root {
-  --foreground-rgb: 0, 0, 0;
-  --background-start-rgb: 214, 219, 220;
-  --background-end-rgb: 255, 255, 255;
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --foreground-rgb: 255, 255, 255;
-    --background-start-rgb: 0, 0, 0;
-    --background-end-rgb: 0, 0, 0;
-  }
-}
+@import 'variables.css';
 
 ::-webkit-scrollbar {
   width: 8px;
@@ -40,17 +27,24 @@
 .logo {
   font-size: 25px;
   font-weight: bold;
-  color: #C0C0C0;
+  color: var(--secondary);
   font-family: 'Chalkduster', cursive, sans-serif;
   font-style: italic;
 }
 
 body {
-  color: rgb(var(--foreground-rgb));
+  color: rgb(var(--text));
   padding: 20px;
-  background-color: #2B2B2B;
+  background-color: rgb(var(--body-background-rgb));
 }
 
 .button-hover-visible:hover {
   opacity: 1 !important;
+}
+
+.highlight:hover {
+  background-color: rgba(var(--background-rgb), 0.5);
+  border-radius: 5px; 
+  box-shadow: 0px 0px 10px #C0C0C0;
+  opacity: 0.8;
 }

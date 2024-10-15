@@ -1,5 +1,5 @@
 'use client'
-import { Button } from '@mui/material'
+import { Button, hexToRgb } from '@mui/material'
 import React from 'react'
 import { colorPalette } from '../../constants/colorPalette'
 
@@ -10,6 +10,7 @@ function CardButton({
 	width = 'auto',
 	height = 'auto',
 	customStyle = {},
+	disabled = false,
 	...props
 }) {
 	return (
@@ -21,8 +22,10 @@ function CardButton({
 				backgroundColor,
 				width,
 				height,
+				opacity: disabled ? '0.5' : '1',
 				...customStyle
 			}}
+			disabled={disabled}
 			onClick={onClick}
 			{...props}
 		>

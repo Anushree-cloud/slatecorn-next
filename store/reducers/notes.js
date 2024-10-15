@@ -4,7 +4,10 @@ import { notesActions } from '../actions/notes'
 const initialState = {
 	idCount: 1,
 	listing: [],
-	isRearrange: false,
+	isRearrange: {
+		0: false
+	},
+	slateId: null,
 }
 
 const notesSlice = createSlice({

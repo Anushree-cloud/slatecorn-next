@@ -4,9 +4,11 @@ import { addNote, deleteAll, rearrange } from '@/store/reducers/notes'
 import { emptyNote } from '@/constants/notes'
 import HeaderButton from '@/shared/buttons/HeaderButton'
 import { useSelector } from 'react-redux'
+import { useRouter } from 'next/navigation';
 
 function Control() {
     const dispatch = useDispatch()
+    const router = useRouter()
     const { listing, isRearrange } = useSelector((state) => state.notes)
     
     const onAddClick = () => {
@@ -21,14 +23,26 @@ function Control() {
         dispatch(rearrange())
     }
 
+    const onViewAllClick = () => {
+        router.push('/')
+    }
+
     return (
         <div style={{display: 'flex', alignItems: 'center', gap: 10}}>
             <HeaderButton
-                name="Add"
+                name="Add new slateboard"
+                // onClick={onAddClick}
+            />
+            <HeaderButton
+                name="View all slateboards"
+                onClick={onViewAllClick}
+            />
+            {/* <HeaderButton
+                name="Add a note"
                 onClick={onAddClick}
             />
             <HeaderButton 
-                name="Delete All"
+                name="Delete all notes"
                 onClick={onDeleteAllClick}
                 disabled={!listing.length}
             />
@@ -36,7 +50,7 @@ function Control() {
                 name="Re-arrange"
                 onClick={onRearrangeClick}
                 disabled={isRearrange || !listing.length}
-            />
+            /> */}
         </div>
     )
 }

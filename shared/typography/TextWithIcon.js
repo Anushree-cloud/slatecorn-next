@@ -7,6 +7,8 @@ import { colorPalette } from '@/constants/colorPalette'
 function TextWithIcon({
 	icon,
 	children,
+	iconWidth = 20,
+	iconHeight = 20,
 	customStyle = { div: {}, icon: {}, text: {} },
 	...props
 }) {
@@ -15,13 +17,11 @@ function TextWithIcon({
 			<Image
 				src={icon}
 				alt="icon"
-				width={20}
-				height={20}
-				style={{
-					...customStyle.icon,
-				}}
+				width={iconWidth}
+				height={iconHeight}
+				style={customStyle.icon}
 			/>
-			<Typography style={{ ...customStyle.text, color: colorPalette.text }}>{children}</Typography>
+			<Typography style={{ ...customStyle.text }}>{children}</Typography>
 		</FlexDiv>
 	)
 }

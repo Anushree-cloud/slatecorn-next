@@ -1,0 +1,18 @@
+@import '../../../app/variables.css';
+
+.profile-name {
+    .MuiOutlinedInput-root {
+        font-size: 30px !important;
+        font-weight: bold !important;
+        padding: 0px !important;
+    }
+}
+
+.profile-bio {
+    .MuiOutlinedInput-root {
+        font-size: 12px !important;
+        padding: 0px !important;
+        font-style: italic !important;
+        color: rgb(var(--dark-rgb));
+    }
+}

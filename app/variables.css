@@ -1,0 +1,63 @@
+:root {
+    --body-background: #2B2B2B;
+    --primary: #C08081;
+    --secondary: #C0C0C0;
+    --success: #A9B66B;
+    --danger: #800020;
+    --warning: #CC5500;
+    --info: #8A9A9E;
+    --info-dark: #1b4b7d;
+    --light: #F0EDE5;
+    --dark: #2B2B2B;
+    --background: #FFFAE3;
+    --highlight: #593459;
+    --text: #524e52;
+  
+    --body-background-rgb: 43, 43, 43;
+    --primary-rgb: 192, 128, 129;
+    --secondary-rgb: 192, 192, 192;
+    --success-rgb: 169, 182, 107;
+    --danger-rgb: 128, 0, 32;
+    --warning-rgb: 204, 85, 0;
+    --info-rgb: 138, 154, 158;
+    --info-dark-rgb: 27, 75, 125;
+    --light-rgb: 240, 237, 229;
+    --dark-rgb: 43, 43, 43;
+    --background-rgb: 255, 250, 227;
+    --highlight-rgb: 89, 52, 89;
+    --text-rgb: 82, 78, 82;
+  }
+  
+  
+  /* @media (prefers-color-scheme: light) {
+    :root {
+      --body-background: #FFFFFF;
+      --primary: #E57373;
+      --secondary: #D3D3D3;
+      --success: #C5E1A5;
+      --danger: #D32F2F;
+      --warning: #FFA726;
+      --info: #90A4AE;
+      --info-dark: #1565C0;
+      --light: #FFFFFF;
+      --dark: #EEEEEE;
+      --background: #FDFDFD;
+      --highlight: #C36BAC;
+      --text: #3C3C3C;
+  
+      --body-background-rgb: 255, 255, 255;
+      --primary-rgb: 229, 115, 115;
+      --secondary-rgb: 211, 211, 211;
+      --success-rgb: 197, 225, 165;
+      --danger-rgb: 211, 47, 47;
+      --warning-rgb: 255, 167, 38;
+      --info-rgb: 144, 164, 174;
+      --info-dark-rgb: 21, 101, 192;
+      --light-rgb: 255, 255, 255;
+      --dark-rgb: 238, 238, 238;
+      --background-rgb: 253, 253, 253;
+      --highlight-rgb: 195, 107, 172;
+      --text-rgb: 60, 60, 60;
+    }
+    
+  } */

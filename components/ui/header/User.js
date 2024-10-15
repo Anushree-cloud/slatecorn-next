@@ -6,9 +6,11 @@ import userImage from '@/assets/images/profile.png'
 import { colorPalette } from '@/constants/colorPalette'
 import { Dialog, Typography } from '@mui/material'
 import Profile from '../../../components/pages/profile'
+import { useSelector } from 'react-redux'
 
 function User() {
 	const [isProfileOpen, setIsProfileOpen] = React.useState(false)
+	const user = useSelector((state) => state.user.user)
 
 	const onProfileClick = () => {
 		setIsProfileOpen(true)
@@ -24,7 +26,7 @@ function User() {
 				<Typography
 					style={{ fontWeight: 'bold', color: colorPalette.light }}
 				>
-					Captain Duck
+					{ user.name }
 				</Typography>
 				<Image
 					src={userImage}
@@ -42,7 +44,6 @@ function User() {
 			</FlexDiv>
 			<Dialog
 				open={isProfileOpen}
-				onClose={onProfileClose}
 				sx={{
 					'& .MuiPaper-root': {
 						maxWidth: '1200px !important',

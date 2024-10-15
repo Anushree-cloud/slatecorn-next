@@ -1,11 +1,6 @@
-import Header from '../components/pages/home/Header'
-import NoteListing from '../components/pages/home/notes/NoteListing'
+'use client'
+import PageRoot from '../components/layouts/PageRoot'
 
 export default function Home() {
-  return (
-    <>
-      <Header />
-      <NoteListing />
-    </>
-  )
+  return <PageRoot />
 }

@@ -1,14 +1,15 @@
+import { dateFormates } from "@/constants/date"
 import moment from "moment"
 
 export const notesActions = {
 	addNote : (state, actions) => {
-		state.isRearrange = false
+		state.isRearrange = { [actions.payload.slateId]: false }
 		state.listing.push({
 			...actions.payload,
 			id: state.idCount + 1,
 			x: Math.floor(Math.random() * 1600),
 			y: Math.floor(Math.random() * 500),
-			createdAt: moment()
+			createdAt: moment().format(dateFormates.fullDate)
 		})
 		state.idCount = state.idCount + 1
 	},
@@ -27,8 +28,8 @@ export const notesActions = {
 		)
 		state.listing = filteredListing
 	},
-	deleteAll: (state) => {
-		state.listing = []
+	deleteAll: (state, actions) => {
+		state.listing = state.listing.filter(note => note.slateId !== actions.payload.slateId)
 	},
 	scaleNote: (state, actions) => {
 		const noteIndex = state.listing.findIndex(
@@ -49,11 +50,11 @@ export const notesActions = {
 			y: actions.payload.y,
 		}
 	},
-	rearrange: (state) => {
-		state.isRearrange = true
+	rearrange: (state, actions) => {
+		state.isRearrange = { [actions.payload.slateId]: true }
 		state.listing = state.listing.map((note) => ({
 			...note,
-			position: 'initial',
+			position: note.slateId === actions.payload.slateId ? 'initial' : 'absolute',
 		}))
 	},
 }

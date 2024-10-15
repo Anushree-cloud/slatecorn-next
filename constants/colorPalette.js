@@ -13,3 +13,19 @@ export const colorPalette = {
   highlight: '#593459',
   text: '#524e52'
 }
+
+export const lightThemePalette = {
+  bodyBackground: '#FFFFFF',
+  primary: '#E57373',
+  secondary: '#D3D3D3',
+  success: '#C5E1A5',
+  danger: '#D32F2F',
+  warning: '#FFA726',
+  info: '#90A4AE',
+  infoDark: '#1565C0',
+  light: '#FFFFFF',
+  dark: '#EEEEEE',
+  background: '#FDFDFD',
+  highlight: '#C36BAC',
+  text: '#3C3C3C',
+}

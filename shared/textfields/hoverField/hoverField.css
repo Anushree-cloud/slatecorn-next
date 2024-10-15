@@ -1,0 +1,12 @@
+.hover-field {
+    box-shadow: none !important;
+    background-color: transparent !important;
+    .MuiOutlinedInput-root {
+        .MuiOutlinedInput-input {
+            padding: 0px !important;
+        };
+        .MuiOutlinedInput-notchedOutline {
+            border: 0px !important;
+        }
+    }
+}
