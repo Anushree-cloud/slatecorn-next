@@ -29,7 +29,6 @@ import SlateAddDialog from '@/components/ui/slates/SlateAddDialog'
 import addPinIcon from '@/assets/icons/addPinIcon.svg'
 
 function SlateComponent({ slate, notes, onNavigateToSlate, onPinSlate }) {
-	console.log('32=>',slate.pinned)
 	return (
 		<FlexDiv
 			key={slate.id}
@@ -82,13 +81,11 @@ function SlateComponent({ slate, notes, onNavigateToSlate, onPinSlate }) {
 				<FlexDiv
 					alignItems="flex-start"
 					customStyle={{
-						// border: '1px solid #fff',
 						borderRadius: 10,
 						padding: 10,
 						height: '60%',
 						overflow: 'hidden',
 						width: '100%',
-						// boxShadow: `0px 0px 20px ${colorPalette.light}`,
 					}}
 				>
 					{notes?.listing?.filter(
@@ -173,7 +170,6 @@ function SlatesListing() {
 	const onNavigateToSlate = (id) => router.push(`/slate/${id}`)
 
 	const onPinSlate = (id, value) => {
-		console.log('onPinSlate=>', id)
 		dispatch(
 			pinSlate({
 				pinned: value,
@@ -223,7 +219,7 @@ function SlatesListing() {
 								borderBottom: `1px solid #000`,
 							}}
 						>
-							All Slates
+							Other Slates
 						</Typography>
 					</FlexDiv>
 				)}

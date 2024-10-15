@@ -79,7 +79,6 @@ function SlateHeader({ slateId, notes }) {
 			padding={'5px 10px'}
 			customStyle={{
 				width: '100%',
-				// backgroundColor: colorPalette.light,
 				borderRadius: '5px',
 				marginBottom: 10,
 			}}

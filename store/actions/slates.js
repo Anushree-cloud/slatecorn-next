@@ -38,6 +38,5 @@ export const slatesActions = {
             ...state.listing[slateIndex],
             pinned: actions.payload.pinned
         }
-        console.log('41=>',state.listing[slateIndex])
     }
 }

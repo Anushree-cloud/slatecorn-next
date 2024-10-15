@@ -14,10 +14,6 @@ function NoteListing({ slateId }) {
 	const dispatch = useDispatch()
 	const noteRef = useRef(null)
 
-	// const [isDragging, setIsDragging] = React.useState({
-	// 	0: false,
-	// })
-
 	const deleteCurrentNote = (id) => {
 		dispatch(deleteNote({ id }))
 	}
@@ -29,25 +25,6 @@ function NoteListing({ slateId }) {
 	const onScalingOff = (id) => {
 		dispatch(scaleNote({ id, scale: false }))
 	}
-
-	// const onDragging = (id) => {
-	// 	setIsDragging({ [id]: true })
-	// }
-
-	// const onMouseDown = (id) => {
-	// 	onDragging({ [id]: true })
-	// }
-
-	// const onPositionChange = (id, x, y) => {
-	// 	dispatch(dragNote({ id, x, y }))
-	// }
-
-	// const onMouseMove = (e) => {
-	// if (isDragging[e.target.id]) {
-	// 	console.log('55=>', 'onMouseMove', e.clientX, e.clientY)
-	// }
-	// onPositionChange(id, x, y)
-	// }
 
 	return (
 		<div
@@ -90,7 +67,6 @@ function NoteListing({ slateId }) {
 					gap: 10,
 					flexWrap: 'wrap',
 				}}
-				// onMouseMove={onMouseMove}
 			>
 				{notes?.listing
 					?.filter((noteItem) => noteItem?.slateId === slateId)

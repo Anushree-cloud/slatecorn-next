@@ -30,12 +30,10 @@ const NoteCard = ({
 	const debouncedPosition = useDebounce(movePoint, 2500)
 
 	const onDragging = () => {
-		console.log('32=>', 'onDragging')
 		setIsDragging(true)
 	}
 
 	const onMouseDown = (event) => {
-		console.log('30=>', 'onMouseDown')
 		onDragging()
 		setOffset({
 			x: event.clientX - movePoint.x,
@@ -44,7 +42,6 @@ const NoteCard = ({
 	}
 
 	const onMouseMove = (e) => {
-		console.log('39=>', 'onMouseMove')
 		if (!isDragging) return
 		setMovePoint({
 			x: e.clientX - offset.x,
@@ -53,12 +50,10 @@ const NoteCard = ({
 	}
 
 	const onMouseUp = () => {
-		console.log('48=>', 'onMouseUp')
 		setIsDragging(false)
 	}
 
 	const onMouseLeave = () => {
-		console.log('53=>', 'onMouseLeave')
 		setIsDragging(false)
 	}
 

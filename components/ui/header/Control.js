@@ -1,58 +1,65 @@
-'use client';
+'use client'
 import { useDispatch } from 'react-redux'
 import { addNote, deleteAll, rearrange } from '@/store/reducers/notes'
 import { emptyNote } from '@/constants/notes'
 import HeaderButton from '@/shared/buttons/HeaderButton'
 import { useSelector } from 'react-redux'
-import { useRouter } from 'next/navigation';
+import { useRouter } from 'next/navigation'
+import SlateAddDialog from '../slates/SlateAddDialog'
+import { useState } from 'react'
+import { addSlate } from '@/store/reducers/slates'
+import { Backdrop, CircularProgress } from '@mui/material'
 
 function Control() {
-    const dispatch = useDispatch()
-    const router = useRouter()
-    const { listing, isRearrange } = useSelector((state) => state.notes)
-    
-    const onAddClick = () => {
-        dispatch(addNote(emptyNote))
-    }
+	const dispatch = useDispatch()
+	const router = useRouter()
 
-    const onDeleteAllClick = () => {
-        dispatch(deleteAll())
-    }
-    
-    const onRearrangeClick = () => {
-        dispatch(rearrange())
-    }
+	const [slateDialogOpen, setSlateDialogOpen] = useState(false)
+    const [loading, setLoading] = useState(false)
 
-    const onViewAllClick = () => {
-        router.push('/')
-    }
+	const onAddClick = () => {
+		setSlateDialogOpen(true)
+	}
 
-    return (
-        <div style={{display: 'flex', alignItems: 'center', gap: 10}}>
-            <HeaderButton
-                name="Add new slateboard"
-                // onClick={onAddClick}
-            />
-            <HeaderButton
-                name="View all slateboards"
-                onClick={onViewAllClick}
-            />
-            {/* <HeaderButton
-                name="Add a note"
-                onClick={onAddClick}
-            />
-            <HeaderButton 
-                name="Delete all notes"
-                onClick={onDeleteAllClick}
-                disabled={!listing.length}
-            />
-            <HeaderButton
-                name="Re-arrange"
-                onClick={onRearrangeClick}
-                disabled={isRearrange || !listing.length}
-            /> */}
-        </div>
-    )
+	const onClose = () => {
+		setSlateDialogOpen(false)
+	}
+
+	const handleSubmit = (values) => {
+		try {
+            setLoading(true)
+			dispatch(addSlate(values))
+			setSlateDialogOpen(false)
+		} catch (error) {
+			alert('Something went wrong! Please try again!')
+		} finally {
+            setTimeout(() => setLoading(false), 1500)
+        }
+	}
+
+	const onViewAllClick = () => {
+		router.push('/')
+	}
+
+	return (
+		<div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
+			<HeaderButton name="Add new slateboard" onClick={onAddClick} />
+			<HeaderButton
+				name="View all slateboards"
+				onClick={onViewAllClick}
+			/>
+
+			<Backdrop open={loading} style={{ zIndex: 1300, color: '#fff' }}>
+				<CircularProgress color="inherit" />
+			</Backdrop>
+
+			<SlateAddDialog
+				open={slateDialogOpen}
+				handleSubmit={handleSubmit}
+				onClose={onClose}
+			/>
+		</div>
+	)
 }
 
 export default Control
