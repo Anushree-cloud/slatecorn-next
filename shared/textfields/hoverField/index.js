@@ -7,7 +7,7 @@ function HoverField({
 	value = '',
 	onChange = () => {},
 	placeholder = 'Type you folk...',
-	customStyle = {},
+	customStyle = { input: {}, field: {} },
 	customClass = '',
 	endAdornment = null,
 	startAdornment = null,
@@ -30,7 +30,7 @@ function HoverField({
 			onChange={onChange}
 			placeholder={placeholder}
 			style={{
-				...customStyle,
+				...customStyle.field,
 				borderRadius: 10,
 				backgroundColor: 'white',
 				boxShadow: '0px 0px 10px #8A9A9E',
@@ -41,6 +41,11 @@ function HoverField({
 			}}
 			{...props}
             className={`hover-field ${customClass}`}
+			sx={{
+				'& .MuiOutlinedInput-root': {
+					...customStyle.input,
+				},
+			}}
 		/>
 	)
 }

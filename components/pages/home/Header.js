@@ -14,6 +14,7 @@ function Header() {
                 <Image src={logo} alt="logo" width={100} height={100} />
                 <Control />
                 <Typography>Search Slateboard</Typography>
+                <Typography>Stalk Folks</Typography>
             </FlexDiv>
             <User />
         </FlexDiv>

@@ -55,6 +55,27 @@ export const notesActions = {
 		state.listing = state.listing.map((note) => ({
 			...note,
 			position: note.slateId === actions.payload.slateId ? 'initial' : 'absolute',
+			// x: document.getElementById(`${note.id}`)?.getBoundingClientRect().x,
+			// y: document.getElementById(`${note.id}`)?.getBoundingClientRect().y,
 		}))
 	},
+	reAssignMovingPoints: (state, actions) => {
+		state.listing = state.listing.map((note) => ({
+			...note,
+			x: document.getElementById(`${note.id}`)?.getBoundingClientRect().x,
+			y: document.getElementById(`${note.id}`)?.getBoundingClientRect().y,
+		}))
+	},
+	rePosition: (state, actions) => {
+		const noteIndex = state.listing.findIndex(
+			(note) => note.id === actions.payload.id
+		)
+		state.listing[noteIndex] = {
+			...state.listing[noteIndex],
+			position: 'absolute',
+		}
+	},
+	loadSlate: (state, actions) => {
+		state.isLoading = {[actions.payload.id]: actions.payload.loading}
+	}
 }

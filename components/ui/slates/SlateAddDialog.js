@@ -1,5 +1,4 @@
-import React, { useEffect, useState } from 'react'
-import { useDispatch, useSelector } from 'react-redux'
+import React from 'react'
 import { colorPalette } from '@/constants/colorPalette'
 import {
 	Dialog,
@@ -9,7 +8,7 @@ import IconButton from '@/shared/buttons/IconButton'
 import closeIcon from '@/assets/icons/closeIcon.svg'
 import FlexDiv from '@/shared/FlexDiv'
 import FormField from '@/shared/textfields/formField'
-import { Form, Formik, useFormik } from 'formik'
+import { Form, Formik } from 'formik'
 import CardButton from '@/shared/buttons/CardButton'
 
 function SlateAddDialog({
@@ -47,7 +46,7 @@ function SlateAddDialog({
 
 				<Formik
 					initialValues={{
-						slateTitle: '',
+						slateTitle: 'New Slate',
 						slateDescription: '',
 					}}
 					// validationSchema={validateSchema}
@@ -82,6 +81,7 @@ function SlateAddDialog({
 										}
 										placeholder={'Enter the title folk!'}
 										fullWidth={true}
+										
 									/>
 									<FormField
 										// label={'Description'}

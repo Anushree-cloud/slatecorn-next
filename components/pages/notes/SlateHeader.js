@@ -1,5 +1,5 @@
-import React from 'react'
-import { Tooltip, Typography } from '@mui/material'
+import React, { useEffect, useState } from 'react'
+import { MenuItem, Popover, Tooltip, Typography } from '@mui/material'
 import FlexDiv from '@/shared/FlexDiv'
 import TextWithIcon from '@/shared/typography/TextWithIcon'
 import IconButton from '@/shared/buttons/IconButton'
@@ -14,32 +14,37 @@ import pinnedIcon from '@/assets/icons/pinnedIcon.svg'
 import nextIcon from '@/assets/icons/nextLightIcon.svg'
 import prevIcon from '@/assets/icons/previousLightIcon.svg'
 import { useDispatch, useSelector } from 'react-redux'
-import { addNote, deleteAll, rearrange } from '@/store/reducers/notes'
+import { addNote, deleteAll, rearrange, reAssignMovingPoints } from '@/store/reducers/notes'
 import { colorPalette } from '@/constants/colorPalette'
 import { emptyNote } from '@/constants/notes'
 import { shortenString } from '@/utils/stringFormatting'
 import { pinSlate } from '@/store/reducers/slates'
 import { useRouter } from 'next/navigation'
+import { SLATE_VIEW } from '@/constants/slates'
+import listIcon from '@/assets/icons/listIcon.svg'
+import deleteIcon from '@/assets/icons/deleteIcon.svg'
 
-function SlateHeader({ slateId, notes }) {
+function SlateHeader({ slateId, notes, onViewChange, view }) {
+	console.log('26=>',view)
 	const dispatch = useDispatch()
 	const router = useRouter()
 
 	const slates = useSelector((state) => state.slates)
 	const slate = slates.listing.find((slate) => slate.id === slateId)
+	const slateIndex = slates.listing.findIndex((slate) => slate.id === slateId)
+
+	if(slates?.listing?.length === 0) return router.push('/')
+
+	const [slateMenu, setSlateMenu] = useState(null)
 
 	const onRearrangeClick = () => {
-		dispatch(rearrange({ slateId }))
+		dispatch(rearrange({ slateId, notes: notes.listing }))
+		setTimeout(() => dispatch(reAssignMovingPoints({ notes: notes.listing })), 5000)
 	}
 
 	const onAddClick = () => {
-		if (
-			notes.listing?.filter((noteItem) => noteItem?.slateId === slateId)
-				?.length === 50
-		) {
-			alert(
-				'Hey! 50 notes added already. Wanna add more? Then create a new slateboard!'
-			)
+		if (notes.listing?.filter((noteItem) => noteItem?.slateId === slateId)?.length === 20) {
+			alert('Hey! 20 notes added already. Wanna add more? Then create a new slateboard!')
 			return
 		}
 		dispatch(addNote({ ...emptyNote, slateId }))
@@ -74,6 +79,14 @@ function SlateHeader({ slateId, notes }) {
 		router.push(`/slate/${param}`)
 	}
 
+	const isDisabled = {
+		next: slateIndex === (slates.listing.length - 1),
+		prev: slateIndex === 0,
+		add: view === SLATE_VIEW.slateView || notes.listing.length === 20,
+		delete: view === SLATE_VIEW.slateView || notes.listing.length === 0,
+		rearrange: view === SLATE_VIEW.slateView || notes.listing.length === 0 || notes.isRearrange[slateId]
+	}
+
 	return (
 		<FlexDiv
 			padding={'5px 10px'}
@@ -85,7 +98,7 @@ function SlateHeader({ slateId, notes }) {
 			justifyContent="space-between"
 			alignItems="center"
 		>
-			<FlexDiv justifyContent='space-between' alignItems='center' gap={20} customStyle={{ width: '50%' }}>
+			<FlexDiv justifyContent='space-between' alignItems='center' gap={20} customStyle={{ width: '53%' }}>
 				<FlexDiv gap={12} customStyle={{ width: '50%' }}>
 					<Typography
 						style={{
@@ -96,11 +109,11 @@ function SlateHeader({ slateId, notes }) {
 						}}
 						variant="h5"
 					>
-						{shortenString(slate.slateTitle, 20)}
+						{shortenString(slate?.slateTitle, 20)}
 					</Typography>
 					<FlexDiv gap={10} padding={'0px 5px'}>
 						<Tooltip
-							title={`${slate.tokens} loved your board!`}
+							title={`${slate?.tokens?.length} loved your board!`}
 							placement="bottom"
 							arrow
 						>
@@ -110,11 +123,11 @@ function SlateHeader({ slateId, notes }) {
 									text: { color: colorPalette.light },
 								}}
 							>
-								{slate.tokens}
+								{slate?.tokens?.length}
 							</TextWithIcon>
 						</Tooltip>
 						<Tooltip
-							title={`${slate.tokens} loved your board!`}
+							title={`${slate?.tokens} loved your board!`}
 							placement="bottom"
 							arrow
 						>
@@ -139,8 +152,14 @@ function SlateHeader({ slateId, notes }) {
 						<IconButton
 							icon={prevIcon}
 							onClick={() => onNavigating('prev')}
+							disabled={isDisabled.prev}
 							customStyle={{
 								icon: { width: 30, height: 30 },
+								button: {
+									boxShadow: `0px 0px 5px ${colorPalette.light}`,
+									opacity: isDisabled.prev ? 0.2 : 1,
+									padding: 3,
+								}
 							}}
 						/>
 					</Tooltip>
@@ -148,8 +167,14 @@ function SlateHeader({ slateId, notes }) {
 						<IconButton
 							icon={nextIcon}
 							onClick={() => onNavigating('next')}
+							disabled={isDisabled.next}
 							customStyle={{
 								icon: { width: 30, height: 30 },
+								button: {
+									boxShadow: `0px 0px 5px ${colorPalette.light}`,
+									opacity: isDisabled.next ? 0.2 : 1,
+									padding: 3,
+								}
 							}}
 						/>
 					</Tooltip>
@@ -158,12 +183,20 @@ function SlateHeader({ slateId, notes }) {
 
 			<FlexDiv>
 				<Tooltip title={`Add a note`} placement="bottom" arrow>
-					<IconButton icon={addNotesIcon} onClick={onAddClick} />
+					<IconButton 
+						icon={addNotesIcon} 
+						onClick={onAddClick} 
+						disabled={isDisabled.add}
+						customStyle={{
+							button: {
+								opacity: isDisabled.add ? 0.2 : 1
+							}
+						}}
+					/>
 				</Tooltip>
 				<Tooltip title={`Pin this slate?`} placement="bottom" arrow>
 					<IconButton
-						check={true}
-						icon={slate.pinned ? pinnedIcon : addPinIcon}
+						icon={slate?.pinned ? pinnedIcon : addPinIcon}
 						onClick={onPinClick}
 					/>
 				</Tooltip>
@@ -171,16 +204,62 @@ function SlateHeader({ slateId, notes }) {
 					<IconButton
 						icon={rearrangeIcon}
 						onClick={onRearrangeClick}
+						disabled={isDisabled.rearrange}
+						customStyle={{
+							button: {
+								opacity: isDisabled.rearrange ? 0.2 : 1
+							}
+						}}
 					/>
 				</Tooltip>
 				<Tooltip title={`Delete all notes!`} placement="bottom" arrow>
 					<IconButton
 						icon={deleteAllIcon}
 						onClick={onDeleteAllClick}
+						disabled={isDisabled.delete}
+						customStyle={{
+							button: {
+								opacity: isDisabled.delete ? 0.2 : 1
+							}
+						}}
 					/>
 				</Tooltip>
-				<IconButton icon={menuIcon} />
+				<IconButton icon={menuIcon} onClick={(event) => setSlateMenu(event.currentTarget)} />
 			</FlexDiv>
+
+			<Popover 
+				id={`slate-${slate.id}-menu`} 
+				open={Boolean(slateMenu)} 
+				anchorEl={slateMenu} 
+				onClose={() => setSlateMenu(null)}
+				anchorOrigin={{
+					vertical: 'bottom',
+					horizontal: 'left',
+				}}
+				transformOrigin={{
+					vertical: 'top',
+					horizontal: 'left',
+				}}
+			>
+				<MenuItem 
+					style={{
+						boxShadow: `inset 0px 0px 5px ${colorPalette.highlight}`
+					}}
+					onClick={() => {
+						const targetView = view === SLATE_VIEW.slateView ? SLATE_VIEW.noteListing : SLATE_VIEW.slateView
+						onViewChange(targetView)
+					}}
+				>
+					<TextWithIcon icon={listIcon}>{ view === SLATE_VIEW.slateView ? 'Listing' : 'Details'}</TextWithIcon>
+				</MenuItem>
+				<MenuItem
+					style={{
+						boxShadow: `inset 0px 0px 5px ${colorPalette.highlight}`
+					}}
+				>
+					<TextWithIcon icon={deleteIcon}>Delete</TextWithIcon>
+				</MenuItem>
+			</Popover>
 		</FlexDiv>
 	)
 }

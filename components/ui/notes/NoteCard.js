@@ -8,33 +8,60 @@ import NoteView from '@/components/pages/notes/NoteView'
 import Overlay from '@/shared/Overlay'
 import useDebounce from '@/shared/hooks/useDebounce'
 import { useDispatch } from 'react-redux'
-import { dragNote } from '@/store/reducers/notes'
+import { deleteNote, dragNote, rePosition } from '@/store/reducers/notes'
 import IconButtonCustom from '@/shared/buttons/IconButton'
 import moveIcon from '@/assets/icons/moveLight.svg'
 import CardButton from '@/shared/buttons/CardButton'
 
 const NoteCard = ({
 	noteRef = null,
+    floatingDeleteNoteRef = null,
 	noteItem = {},
 	onScaling = () => {},
 	deleteCurrentNote = () => {},
 	onScalingOff = () => {},
 	miniatureMode = false, //view from slate listing
+    setCurrentId = () => {},
+    currentId = null
 }) => {
 	const dispatch = useDispatch()
 
+    const [position, setPosition] = useState(noteItem.position)
 	const [movePoint, setMovePoint] = useState({ x: noteItem.x, y: noteItem.y })
-	const [isDragging, setIsDragging] = useState(false)
 	const [offset, setOffset] = useState({ x: 0, y: 0 })
+    const [isDragging, setIsDragging] = useState(false)
+	const [isOverlapping, setIsOverlapping] = useState(false)
+	const [isFloatingDelete, setIsFloatingDelete] = useState(false)
 
-	const debouncedPosition = useDebounce(movePoint, 2500)
+	const debouncedMovePoint = useDebounce(movePoint, 2500)
+    // const debouncedPosition = useDebounce(position, 1000)
+
+    const endDragAndDelete = () => {
+        setIsDragging(false)
+        setIsOverlapping(false)
+        setIsFloatingDelete(false)
+    }
 
 	const onDragging = () => {
 		setIsDragging(true)
 	}
 
+    const onOverlapping = () => {
+		const noteRect = document.getElementById(`${noteItem.id}`)?.getBoundingClientRect()
+		const floatingDeleteNoteRect = document.getElementById('floating-delete-note-button')?.getBoundingClientRect()
+        
+		const overlapping = 
+			noteRect?.left < floatingDeleteNoteRect?.right && 
+			noteRect?.right > floatingDeleteNoteRect?.left &&
+			noteRect?.top < floatingDeleteNoteRect?.bottom &&
+			noteRect?.bottom > floatingDeleteNoteRect?.top
+
+		setIsOverlapping(overlapping)
+	}
+
 	const onMouseDown = (event) => {
 		onDragging()
+        dispatch(rePosition({ id: noteItem.id }))
 		setOffset({
 			x: event.clientX - movePoint.x,
 			y: event.clientY - movePoint.y,
@@ -47,38 +74,61 @@ const NoteCard = ({
 			x: e.clientX - offset.x,
 			y: e.clientY - offset.y,
 		})
+        
+        onOverlapping()
 	}
 
 	const onMouseUp = () => {
+        if(isOverlapping) {
+            setIsFloatingDelete(true)
+        }
 		setIsDragging(false)
+        setIsOverlapping(false)
 	}
 
 	const onMouseLeave = () => {
-		setIsDragging(false)
+		endDragAndDelete()
 	}
 
 	useEffect(() => {
 		dispatch(dragNote({ id: noteItem.id, x: movePoint.x, y: movePoint.y }))
-	}, [debouncedPosition])
+	}, [debouncedMovePoint])
 
     useEffect(() => {
-        if (isDragging) {
-          document.addEventListener('mousemove', onMouseMove)
-          document.addEventListener('mouseup', onMouseUp)
-          document.addEventListener('mouseleave', onMouseLeave)
+        if(isFloatingDelete){
+            setTimeout(() => dispatch(deleteNote({ id: noteItem.id })), 500)
+            // dispatch(deleteNote({ id: noteItem.id }))
+            setIsFloatingDelete(false)
+        }
+        setIsDragging(false)
+        setIsOverlapping(false)
+    }, [isFloatingDelete])
+
+    useEffect(() => {
+        if (isDragging[noteItem.id]) {
+            document.addEventListener('mousemove', onMouseMove)
+            document.addEventListener('mouseup', onMouseUp)
+            document.addEventListener('mouseleave', onMouseLeave)
         } else {
-          document.removeEventListener('mousemove', onMouseMove)
-          document.removeEventListener('mouseup', onMouseUp)
-          document.removeEventListener('mouseleave', onMouseLeave)
+            document.removeEventListener('mousemove', onMouseMove)
+            document.removeEventListener('mouseup', onMouseUp)
+            document.removeEventListener('mouseleave', onMouseLeave)
         }
     
-        // Cleanup listeners on component unmount or when isDragging changes
         return () => {
-          document.removeEventListener('mousemove', onMouseMove)
-          document.removeEventListener('mouseup', onMouseUp)
-          document.removeEventListener('mouseleave', onMouseLeave)
+            document.removeEventListener('mousemove', onMouseMove)
+            document.removeEventListener('mouseup', onMouseUp)
+            document.removeEventListener('mouseleave', onMouseLeave)
         }
-      }, [isDragging])
+    }, [isDragging[noteItem.id]])
+
+    useEffect(() => {
+        if(isOverlapping) {
+            setCurrentId(noteItem.id)
+        } else {
+            setCurrentId(null)
+        }
+    }, [isOverlapping])
 
 	return (
 		<>
@@ -107,9 +157,6 @@ const NoteCard = ({
 						noteItem?.isScaling && !miniatureMode
 							? '200px'
 							: `${movePoint.y}px`,
-					// transform: (noteItem?.isScaling && !miniatureMode)
-					// 	? 'scale(3.5)'
-					// 	: 'scale(1)',
 					zIndex:
 						noteItem?.isScaling && !miniatureMode ? '1000' : '1',
 					height:
@@ -122,6 +169,7 @@ const NoteCard = ({
 							: '250px',
 					boxShadow: `0px 0px 10px ${colorPalette.info}`,
 					transition: 'width 0.5s ease, height 0.5s ease',
+                    opacity: isOverlapping ? 0.5 : 1,
 				}}
 			>
 				{noteItem?.isScaling && !miniatureMode ? (

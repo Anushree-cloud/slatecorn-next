@@ -8,6 +8,9 @@ const initialState = {
 		0: false
 	},
 	slateId: null,
+	isLoading: {
+		0: false,
+	},
 }
 
 const notesSlice = createSlice({
@@ -21,6 +24,9 @@ const notesSlice = createSlice({
 		scaleNote: notesActions.scaleNote,
 		dragNote: notesActions.dragNote,
 		rearrange: notesActions.rearrange,
+		rePosition: notesActions.rePosition,
+		reAssignMovingPoints: notesActions.reAssignMovingPoints,
+		loadSlate: notesActions.loadSlate
 	},
 })
 
@@ -32,6 +38,9 @@ export const {
 	dragNote,
 	rearrange,
 	scaleNote,
+	rePosition,
+	reAssignMovingPoints,
+	loadSlate
 } = notesSlice.actions
 
 export default notesSlice.reducer

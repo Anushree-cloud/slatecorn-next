@@ -202,7 +202,8 @@ function SlatesListing() {
 							{slates.listing
 								.filter((slate) => slate.pinned)
 								.map((slate) => (
-									<SlateComponent 
+									<SlateComponent
+										key={slate.id}
 										slate={slate} 
 										notes={notes} 
 										onNavigateToSlate={onNavigateToSlate}
@@ -229,6 +230,7 @@ function SlatesListing() {
 						.filter((slate) => !slate.pinned)
 						.map((slate) => (
 							<SlateComponent 
+								key={slate.id}
 								slate={slate} 
 								notes={notes}
 								onNavigateToSlate={onNavigateToSlate}

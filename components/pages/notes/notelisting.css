@@ -40,4 +40,18 @@
     background-color: #800020;
     color: white
   }
-  
+
+  .card-delete {
+    animation: floatingDelete 1s ease-out 0s 1 forwards forwards;
+  }
+
+  @keyframes floatingDelete {
+    /* 0%   { opacity: 1; }
+    25%  { opacity: 0.8; }
+    50%  { opacity: 0.5; }
+    75%  { opacity: 0.2; }
+    100% { opacity: 0; } */
+
+    from { opacity: 0.5; } 
+    to   { opacity: 0; }
+  }

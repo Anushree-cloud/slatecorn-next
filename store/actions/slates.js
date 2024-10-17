@@ -6,10 +6,10 @@ export const slatesActions = {
             createdAt: new Date().toISOString(),
             updatedAt: new Date().toISOString(),
             isActive: true,
-            isPublic: false,
-            isShared: false,
+            isPublic: true,
             isDeleted: false,
-            tokens: 0,
+            tokens: [],
+            shares: [],
             comments: [],
             pinned: false,
         })

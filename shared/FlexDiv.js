@@ -13,7 +13,16 @@ function FlexDiv({
 }) {
 	return (
 		<div
-			style={{ display, gap, padding, alignItems, justifyContent, flexDirection, flexWrap, ...customStyle }}
+			style={{ 
+				display, 
+				gap, 
+				padding, 
+				alignItems, 
+				justifyContent, 
+				flexDirection, 
+				flexWrap,
+				...customStyle 
+			}}
 			{...props}
 		>
 			{props.children}
