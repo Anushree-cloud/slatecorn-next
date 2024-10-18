@@ -39,5 +39,8 @@ export const slatesActions = {
             ...state.listing[slateIndex],
             pinned: actions.payload.pinned
         }
+    },
+    searchSlate: (state, actions) => {
+        state.searchValue = actions.payload.searchValue
     }
 }

@@ -25,6 +25,7 @@ import listIcon from '@/assets/icons/listIcon.svg'
 import deleteIcon from '@/assets/icons/deleteIcon.svg'
 import BasicAlert from '@/shared/alerts/BasicAlert'
 import CardButton from '@/shared/buttons/CardButton'
+import { ROUTES } from '@/constants/routes'
 
 function SlateHeader({ slateId, notes, onViewChange, view }) {
 	const dispatch = useDispatch()
@@ -97,7 +98,7 @@ function SlateHeader({ slateId, notes, onViewChange, view }) {
 			param = slates.listing[currentSlateIndex - 1].id
 		}
 
-		router.push(`/slate/${param}`)
+		router.push(ROUTES.SLATE_ROUTES.view.replace(':id', param))
 	}
 
 	const onDeleteSlate = () => {
@@ -109,7 +110,7 @@ function SlateHeader({ slateId, notes, onViewChange, view }) {
 		} catch (error) {
 			alert('Something went wrong! Please try again!')
 		} finally {
-			router.push('/')
+			router.push(ROUTES.SLATE_ROUTES.listing)
 			setLoading(false)
 		}
 	}

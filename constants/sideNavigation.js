@@ -9,8 +9,8 @@ import slateIconSelected from '@/assets/icons/slateIcon.svg'
 
 export const sideNavigation = [
     {
-        section: 'main',
-        sectionLabel: 'Main',
+        key: 'main',
+        label: 'Main',
         items: [
             {
                 key: 'dashboard',
@@ -19,6 +19,7 @@ export const sideNavigation = [
                 childItems: [],
                 icon: dashboardIcon,
                 selectedIcon: dashboardIconSelected,
+                sidebar: true
             },
             {
                 key: 'settings',
@@ -26,6 +27,7 @@ export const sideNavigation = [
                 path: ROUTES.MAIN_ROUTES.dashboard,
                 icon: settingsIcon,
                 selectedIcon: settingsIconSelected,
+                sidebar: true,
                 childItems: [
                     {
                         key: 'click',
@@ -33,6 +35,7 @@ export const sideNavigation = [
                         path: ROUTES.MAIN_ROUTES.settings,
                         icon: settingsIcon,
                         selectedIcon: settingsIconSelected,
+                        sidebar: true
                     },
                     {
                         key: 'click',
@@ -40,22 +43,33 @@ export const sideNavigation = [
                         path: ROUTES.MAIN_ROUTES.settings,
                         icon: settingsIcon,
                         selectedIcon: settingsIconSelected,
+                        sidebar: true
                     },
                 ]
             },
         ]
     },
     {
-        section: 'slates',
-        sectionLabel: 'Slates',
+        key: 'slates',
+        label: 'Slates',
         items: [
             {
                 key: 'slates',
-                label: 'Slates',
+                label: 'Listing',
                 path: ROUTES.SLATE_ROUTES.listing,
                 icon: slateIcon,
                 selectedIcon: slateIconSelected,
-                childItems: []
+                childItems: [],
+                sidebar: true
+            },
+            {
+                key: 'slate',
+                label: 'Details',
+                path: ROUTES.SLATE_ROUTES.view,
+                icon: slateIcon,
+                selectedIcon: slateIconSelected,
+                childItems: [],
+                sidebar: false
             },
         ]
     }
@@ -68,4 +82,16 @@ export const initialSelectedItem = {
     childItems: [],
     icon: dashboardIcon,
     selectedIcon: dashboardIconSelected,
+}
+
+export const MODULES = {
+    dashboard: 'dashboard',
+    settings: 'settings',
+    slates: 'slates',
+    slate: 'slate',
+}
+
+export const SECTIONS = {
+    main: 'main',
+    slates: 'slates'
 }

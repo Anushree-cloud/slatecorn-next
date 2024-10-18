@@ -36,7 +36,7 @@ function SlateComponent({ slate, notes, onNavigateToSlate, onPinSlate }) {
 				border: '1px solid #fff',
 				borderRadius: 10,
 				padding: 10,
-				margin: '20px 0px',
+				// margin: '20px 0px',
 				height: 250,
 				width: 400,
 				overflow: 'hidden',
@@ -201,6 +201,7 @@ function SlatesListing() {
 						<FlexDiv alignItems="center" gap={30} flexWrap="wrap">
 							{slates.listing
 								.filter((slate) => slate.pinned)
+								.filter((slate) => slates.searchValue === '' || slate.slateTitle.toLowerCase().includes(slates.searchValue.toLowerCase()))
 								.map((slate) => (
 									<SlateComponent
 										key={slate.id}
@@ -228,15 +229,18 @@ function SlatesListing() {
 				<FlexDiv alignItems="center" gap={30} flexWrap="wrap">
 					{slates.listing
 						.filter((slate) => !slate.pinned)
-						.map((slate) => (
-							<SlateComponent 
-								key={slate.id}
-								slate={slate} 
-								notes={notes}
-								onNavigateToSlate={onNavigateToSlate}
-								onPinSlate={onPinSlate}
-							/>
-						))}
+						.filter((slate) => slates.searchValue === '' || slate.slateTitle.toLowerCase().includes(slates.searchValue.toLowerCase()))
+						.map((slate) => {
+							return (
+								<SlateComponent 
+									key={slate.id}
+									slate={slate} 
+									notes={notes}
+									onNavigateToSlate={onNavigateToSlate}
+									onPinSlate={onPinSlate}
+								/>
+							)
+						})}
 					<MuiIconButton
 						onClick={() => setSlateAddDialogOpen(true)}
 						style={{ borderRadius: 5 }}

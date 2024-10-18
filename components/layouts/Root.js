@@ -16,7 +16,7 @@ function Root(props) {
 				<FlexDiv 
 					justifyContent='flex-start' 
 					alignItems='flex-start' 
-					customStyle={{ height: window.innerHeight }} 
+					customStyle={{ height: window.outerHeight - 150 }} 
 					gap={0}
 				>
 					<FlexDiv
@@ -24,7 +24,7 @@ function Root(props) {
 							width: 100,
 							height: '100%',
 							background: 'rgba(0, 0, 0, 0.3)',
-							boxShadow: 'rgb(202, 194, 202) 0px 0px 10px',
+							boxShadow: '0px -15px 50px 43px rgb(43 43 43), inset 0px -50px 30px 4px rgb(43 43 43)'
 						}}
 					>
 						<SideNavigation />
@@ -38,11 +38,12 @@ function Root(props) {
 						}}
 						alignItems='flex-start'
 						justifyContent='flex-start'
+						gap={0}
 					>
 						<Header />
 
 						{/* Layout */}
-						<FlexDiv justifyContent='center'>
+						<FlexDiv justifyContent='center' customStyle={{ width: '100%' }}>
 							{props.children}
 						</FlexDiv>
 						

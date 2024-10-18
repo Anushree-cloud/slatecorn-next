@@ -7,7 +7,7 @@ function FormField({
     value = '', 
     onChange = () => {}, 
     placeholder = '', 
-    customStyle = {}, 
+    customStyle = { field: {}, input: {} },
     endAdornment = null, 
     startAdornment = null, 
     readOnly = false, 
@@ -28,6 +28,11 @@ function FormField({
 					borderRadius: 10,
 					backgroundColor: 'white',
 					boxShadow: '0px 0px 10px #8A9A9E',
+				}}
+				sx={{
+					'& .MuiOutlinedInput-root': {
+						...customStyle.input,
+					},
 				}}
 				slotProps={{
 					input: { startAdornment, endAdornment, readOnly },

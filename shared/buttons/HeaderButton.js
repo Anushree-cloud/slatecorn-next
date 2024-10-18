@@ -3,7 +3,13 @@ import { Button } from '@mui/material'
 import React from 'react'
 import { colorPalette } from '@/constants/colorPalette'
 
-function HeaderButton({ name, onClick, disabled=false, ...props }) {
+function HeaderButton({
+	name,
+	onClick,
+	disabled = false,
+	customStyle = {},
+	...props
+}) {
 	return (
 		<Button
 			style={{
@@ -11,11 +17,12 @@ function HeaderButton({ name, onClick, disabled=false, ...props }) {
 				color: colorPalette.light,
 				borderRadius: 5,
 				textTransform: 'none',
-        opacity: disabled ? 0.5 : 1,
+				opacity: disabled ? 0.5 : 1,
+				...customStyle,
 			}}
 			onClick={onClick}
-      disabled={disabled}
-      {...props}
+			disabled={disabled}
+			{...props}
 		>
 			{name}
 		</Button>

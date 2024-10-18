@@ -1,12 +1,8 @@
 import React from 'react'
-import SlatesListing from '@/components/pages/slates/SlatesListing'
+import Slates from '@/components/pages/slates'
 
 function page() {
-	return (
-		<>
-			<SlatesListing />
-		</>
-	)
+	return <Slates />
 }
 
 export default page

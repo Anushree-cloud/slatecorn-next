@@ -9,14 +9,12 @@
 
 /* Track */
 ::-webkit-scrollbar-track {
-  box-shadow: inset 0 0 20px grey; 
-  border-radius: 10px;
+  box-shadow: inset 0 0 20px #161616;
 }
  
 /* Handle */
 ::-webkit-scrollbar-thumb {
-  background: #8A9A9E; 
-  border-radius: 10px;
+  box-shadow: inset 0px 0px 20px;
 }
 
 /* Handle on hover */

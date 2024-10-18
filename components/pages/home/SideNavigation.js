@@ -102,6 +102,7 @@ function SideNavigation() {
                         {sideNavigation.map((section) => {
                             return (
                                 <FlexDiv 
+                                    key={section.key}
                                     flexDirection='column'
                                     alignItems='flex-start'
                                     customStyle={{
@@ -113,10 +114,12 @@ function SideNavigation() {
                                         fontSize={12}
                                         fontStyle={'italic'}
                                     >
-                                        {section.sectionLabel}
+                                        {section.label}
                                     </Typography>
 
                                     {section.items.map((subSection) => {
+                                        if(!subSection.sidebar) return <></>
+
                                         const isSubSectionSelected = sidebar.selectedItem?.key === subSection.key
                                         return (
                                             <>
