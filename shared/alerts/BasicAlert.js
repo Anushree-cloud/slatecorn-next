@@ -2,12 +2,14 @@ import React from 'react'
 import { colorPalette } from '@/constants/colorPalette'
 import {
 	Dialog,
+	Skeleton,
 	Typography,
 } from '@mui/material'
 import IconButton from '@/shared/buttons/IconButton'
 import closeIcon from '@/assets/icons/closeIcon.svg'
 import FlexDiv from '@/shared/FlexDiv'
 import CardButton from '@/shared/buttons/CardButton'
+import '@/shared/loaders/loaders.css'
 
 const ConfirmButton = ({ onClick, ...props }) => {
 	return (
@@ -35,6 +37,32 @@ const CancelButton = ({ onClick, ...props }) => {
 	)
 }
 
+const LoadingSkeleton = () => {
+	return (
+		<>
+			<Skeleton variant='rounded' height={30} style={{ width: '100%', background: colorPalette.light }} />
+			
+			<FlexDiv
+				style={{
+					width: '100%',
+					display: 'flex',
+					flexDirection: 'column',
+					gap: 10,
+				}}
+			>
+				<Typography className='slate-loader' style={{ padding: 10 }}>
+					Loading...
+				</Typography>
+
+				<FlexDiv customStyle={{ width: '100%' }}>
+					<Skeleton variant='rounded' height={20} style={{ width: '100%', background: colorPalette.highlight }} />
+					<Skeleton variant='rounded' height={20} style={{ width: '100%', background: colorPalette.info }} />
+				</FlexDiv>
+			</FlexDiv>
+		</>
+	)
+}
+
 function BasicAlert({
     open,
     onClose = () => {},
@@ -45,6 +73,7 @@ function BasicAlert({
 	CustomCancelButton = CancelButton,
 	confirmButtomProps = {},
 	cancelButtonProps = {},
+	loading = false
 }) {
 
 	return (
@@ -54,45 +83,50 @@ function BasicAlert({
 				padding={10}
 				customStyle={{ width: 500 }}
 			>
-				<FlexDiv
-					justifyContent="space-between"
-					alignItems="center"
-					customStyle={{ width: '100%', backgroundColor: colorPalette.light, borderRadius: 5 }}
-					padding={10}
-				>
-					<Typography
-						variant="h5"
-						style={{
-							fontStyle: 'italic',
-							fontWeight: 'bold',
-						}}
-					>
-						{title}
-					</Typography>
-					<IconButton
-						onClick={onClose}
-						icon={closeIcon}
-					/>
-				</FlexDiv>
-				
-				<FlexDiv
-					style={{
-						width: '100%',
-						display: 'flex',
-						flexDirection: 'column',
-						gap: 10,
-					}}
-				>
-					<Typography padding={10}>
-						{body}
-					</Typography>
-
-					<FlexDiv customStyle={{ width: '100%' }}>
-						<CustomConfirmButton onClick={handleSubmit} {...confirmButtomProps} />
-						<CustomCancelButton onClick={onClose} {...cancelButtonProps} />
-					</FlexDiv>
-				</FlexDiv>
+				{loading ? 
+					<LoadingSkeleton />
+					:
+					<>
+						<FlexDiv
+							justifyContent="space-between"
+							alignItems="center"
+							customStyle={{ width: '100%', backgroundColor: colorPalette.light, borderRadius: 5 }}
+							padding={10}
+						>
+							<Typography
+								variant="h5"
+								style={{
+									fontStyle: 'italic',
+									fontWeight: 'bold',
+								}}
+							>
+								{title}
+							</Typography>
+							<IconButton
+								onClick={onClose}
+								icon={closeIcon}
+							/>
+						</FlexDiv>
 						
+						<FlexDiv
+							style={{
+								width: '100%',
+								display: 'flex',
+								flexDirection: 'column',
+								gap: 10,
+							}}
+						>
+							<Typography style={{ padding: 10 }}>
+								{body}
+							</Typography>
+
+							<FlexDiv customStyle={{ width: '100%' }}>
+								<CustomConfirmButton onClick={handleSubmit} {...confirmButtomProps} />
+								<CustomCancelButton onClick={onClose} {...cancelButtonProps} />
+							</FlexDiv>
+						</FlexDiv>
+					</>
+				}
 			</FlexDiv>
 		</Dialog>
 	)

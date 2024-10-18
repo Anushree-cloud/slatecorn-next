@@ -34,7 +34,7 @@
 
 body {
   color: rgb(var(--text));
-  padding: 20px;
+  /* padding: 20px; */
   background-color: rgb(var(--body-background-rgb));
 }
 

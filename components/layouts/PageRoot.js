@@ -1,10 +1,10 @@
 'use client'
-import SlatesListing from '@/components/pages/slates/SlatesListing'
+import DashBoard from '@/components/pages/dashboard'
 
 export default function PageRoot() {
 	return (
 		<>
-			<SlatesListing />
+			<DashBoard />
 		</>
 	)
 }

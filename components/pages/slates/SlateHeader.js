@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { use, useEffect, useState } from 'react'
 import { MenuItem, Popover, Tooltip, Typography } from '@mui/material'
 import FlexDiv from '@/shared/FlexDiv'
 import TextWithIcon from '@/shared/typography/TextWithIcon'
@@ -18,28 +18,42 @@ import { addNote, deleteAll, rearrange, reAssignMovingPoints } from '@/store/red
 import { colorPalette } from '@/constants/colorPalette'
 import { emptyNote } from '@/constants/notes'
 import { shortenString } from '@/utils/stringFormatting'
-import { pinSlate } from '@/store/reducers/slates'
+import { deleteSlate, pinSlate } from '@/store/reducers/slates'
 import { useRouter } from 'next/navigation'
 import { SLATE_VIEW } from '@/constants/slates'
 import listIcon from '@/assets/icons/listIcon.svg'
 import deleteIcon from '@/assets/icons/deleteIcon.svg'
+import BasicAlert from '@/shared/alerts/BasicAlert'
+import CardButton from '@/shared/buttons/CardButton'
 
 function SlateHeader({ slateId, notes, onViewChange, view }) {
-	console.log('26=>',view)
 	const dispatch = useDispatch()
 	const router = useRouter()
 
 	const slates = useSelector((state) => state.slates)
-	const slate = slates.listing.find((slate) => slate.id === slateId)
-	const slateIndex = slates.listing.findIndex((slate) => slate.id === slateId)
-
-	if(slates?.listing?.length === 0) return router.push('/')
+	const slate = slates.listing.find((slate) => slate?.id === slateId)
+	const slateIndex = slates.listing.findIndex((slate) => slate?.id === slateId)
 
 	const [slateMenu, setSlateMenu] = useState(null)
 
+	const [alertsOpen, setAlertsOpen] = useState({
+		deleteAllNotes: false,
+		deleteSlate: false
+	})
+
+	const [loading, setLoading] = useState(false)
+
+	const deleteSlatePopoverOpen = (openValue) => {
+		setAlertsOpen({ ...alertsOpen, deleteSlate: openValue })
+	}
+
+	const deleteAllNotesPopoverOpen = (openValue) => {
+		setAlertsOpen({ ...alertsOpen, deleteAllNotes: openValue })
+	}
+
 	const onRearrangeClick = () => {
 		dispatch(rearrange({ slateId, notes: notes.listing }))
-		setTimeout(() => dispatch(reAssignMovingPoints({ notes: notes.listing })), 5000)
+		// setTimeout(() => dispatch(reAssignMovingPoints({ notes: notes.listing })), 5000)
 	}
 
 	const onAddClick = () => {
@@ -50,12 +64,19 @@ function SlateHeader({ slateId, notes, onViewChange, view }) {
 		dispatch(addNote({ ...emptyNote, slateId }))
 	}
 
-	const onDeleteAllClick = () => {
-		dispatch(deleteAll({ slateId }))
+	const onDeleteAllClick = () => {	
+		try {
+			setLoading(true)
+			dispatch(deleteAll({ slateId }))
+		} catch (error) {
+			alert('Something went wrong! Please try again!')
+		} finally {	
+			setLoading(false)
+		}
 	}
 
 	const onPinClick = () => {
-		dispatch(pinSlate({ pinned: !slate.pinned, slateId }))
+		dispatch(pinSlate({ pinned: !slate?.pinned, slateId }))
 	}
 
 	const onNavigating = (action) => {
@@ -77,6 +98,20 @@ function SlateHeader({ slateId, notes, onViewChange, view }) {
 		}
 
 		router.push(`/slate/${param}`)
+	}
+
+	const onDeleteSlate = () => {
+		try {
+			setLoading(true)
+			setSlateMenu(null)
+			dispatch(deleteSlate({ id: slateId }))
+			dispatch(deleteAll({ slateId }))
+		} catch (error) {
+			alert('Something went wrong! Please try again!')
+		} finally {
+			router.push('/')
+			setLoading(false)
+		}
 	}
 
 	const isDisabled = {
@@ -215,7 +250,7 @@ function SlateHeader({ slateId, notes, onViewChange, view }) {
 				<Tooltip title={`Delete all notes!`} placement="bottom" arrow>
 					<IconButton
 						icon={deleteAllIcon}
-						onClick={onDeleteAllClick}
+						onClick={() => deleteAllNotesPopoverOpen(true)}
 						disabled={isDisabled.delete}
 						customStyle={{
 							button: {
@@ -228,7 +263,7 @@ function SlateHeader({ slateId, notes, onViewChange, view }) {
 			</FlexDiv>
 
 			<Popover 
-				id={`slate-${slate.id}-menu`} 
+				id='slate-menu' 
 				open={Boolean(slateMenu)} 
 				anchorEl={slateMenu} 
 				onClose={() => setSlateMenu(null)}
@@ -250,16 +285,39 @@ function SlateHeader({ slateId, notes, onViewChange, view }) {
 						onViewChange(targetView)
 					}}
 				>
-					<TextWithIcon icon={listIcon}>{ view === SLATE_VIEW.slateView ? 'Listing' : 'Details'}</TextWithIcon>
+					<TextWithIcon icon={listIcon}>{ view === SLATE_VIEW.slateView ? 'Notes Listing' : 'Slate Details'}</TextWithIcon>
 				</MenuItem>
 				<MenuItem
 					style={{
 						boxShadow: `inset 0px 0px 5px ${colorPalette.highlight}`
 					}}
+					onClick={() => deleteSlatePopoverOpen(true)}
 				>
-					<TextWithIcon icon={deleteIcon}>Delete</TextWithIcon>
+					<TextWithIcon icon={deleteIcon}>Delete This Slate</TextWithIcon>
 				</MenuItem>
 			</Popover>
+
+			<BasicAlert 
+				title='Delete All Notes?' 
+				body={`Are you sure you want to delete all notes from this slateboard?`}
+				open={alertsOpen.deleteAllNotes} 
+				onClose={() => deleteAllNotesPopoverOpen(false)} 
+				handleSubmit={onDeleteAllClick}
+				loading={loading}
+			/>
+
+			<BasicAlert 
+				title='Delete This Slate?' 
+				body={slate?.pinned ? `Hey! you can't delete a pinned slate!` : `Are you sure you want to delete this slateboard?`}
+				open={alertsOpen.deleteSlate} 
+				onClose={() => deleteSlatePopoverOpen(false)} 
+				handleSubmit={onDeleteSlate}
+				{...(slate?.pinned ? { 
+					CustomCancelButton: <></>,
+					CustomConfirmButton: <CardButton name='Okay' onClick={() => deleteSlatePopoverOpen(false)} />
+				} : {})}
+				loading={loading}
+			/>
 		</FlexDiv>
 	)
 }

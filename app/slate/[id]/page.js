@@ -1,8 +1,8 @@
 import React from 'react'
-import NoteListing from '@/components/pages/notes/NoteListing'  
+import SlateView from '@/components/pages/slates/SlateView'
 
 function Slate({ params }) {
-	return <NoteListing slateId={parseInt(params.id)} />
+	return <SlateView slateId={parseInt(params.id)} />
 }
 
 export default Slate

@@ -1,221 +1,170 @@
-import { Button } from '@mui/material'
+'use client'
 import React, { useEffect, useRef, useState } from 'react'
-import TextWithIcon from '@/shared/typography/TextWithIcon'
-import FlexDiv from '@/shared/FlexDiv'
-import { Typography } from '@mui/material'
-import backIcon from '@/assets/icons/backIconLight.svg'
-import HoverField from '@/shared/textfields/hoverField'
+import { useDispatch, useSelector } from 'react-redux'
+import { deleteNote, loadSlate, scaleNote } from '@/store/reducers/notes'
+import '../notes/notelisting.css'
+import NoteCard from '@/components/ui/notes/NoteCard'
 import { colorPalette } from '@/constants/colorPalette'
-import useDebounce from '@/shared/hooks/useDebounce'
-import { useDispatch } from 'react-redux'
-import moment from 'moment'
-import { dateFormates } from '@/constants/date'
+import SlateHeader from '../slates/SlateHeader'
+import FlexDiv from '@/shared/FlexDiv'
+import { Skeleton, Typography } from '@mui/material'
+import TextWithIcon from '@/shared/typography/TextWithIcon'
+import deleteNoteIcon from '@/assets/icons/deleteAllLightIcon.svg'
+import SlateLoader from '@/shared/loaders/SlateLoader'
+import SlateDetails from '../slates/SlateDetails'
 import { editSlate } from '@/store/reducers/slates'
-import likeIcon from '@/assets/icons/allLikes.svg'
-import commentsIcon from '@/assets/icons/commentsLight.svg'
-import shareIcon from '@/assets/icons/shareLight.svg'
-import privateIcon from '@/assets/icons/privateLight.svg'
-import publicIcon from '@/assets/icons/publicLight.svg'
-import BasicAlert from '@/shared/alerts/BasicAlert'
-import useTypewriterEffect from '@/shared/hooks/useTypewriterEffect'
+import useDebounce from '@/shared/hooks/useDebounce'
 import { SLATE_VIEW } from '@/constants/slates'
+import NoteListing from '@/components/pages/notes/NoteListing'
 
-function SlateView({ 
-    onViewChange, 
-    slate,
-    setIsTypewriterEnabled,
-    isTypewriterEnabled,
-    slateDescription,
-    setSlateDescription,
-    // typewriterText,
-    onEditSlate
-}) {
+function SlateView({ slateId }) {
+	const notes = useSelector((state) => state.notes)
+	const slate = useSelector((state) => state.slates.listing.find((slate) => slate.id === slateId))
 	const dispatch = useDispatch()
+	const noteRef = useRef(null)
+	const floatingDeleteNoteRef = useRef(null)
+	const [currentId, setCurrentId] = useState(null)
 
-    const [typewriterText, setTypewriterText] = useState('')
-    const typewriterTextValue = useTypewriterEffect(slateDescription, 100)
-    const [privacyAlertOpen, setPrivacyAlertOpen] = useState(false)
+	const [slateDescription, setSlateDescription] = useState(slate?.slateDescription)
+    const debouncedDescription = useDebounce(slateDescription, 1500)
+    
+    const [isTypewriterEnabled, setIsTypewriterEnabled] = useState(true)
 
-	const handlePrivacyAlertClose = () => setPrivacyAlertOpen(false)
-    const handlePrivacyAlertOpen = () => setPrivacyAlertOpen(true)
-    const handlePrivacyAlertConfirm = () => {
-        setPrivacyAlertOpen(false)
-        onEditSlate('isPublic', !slate?.isPublic)
-    }
+	const onEditSlate = (fieldName, value) => {
+		dispatch(editSlate({ [fieldName]: value, id: slate?.id }))
+	}
 
-    useEffect(() => {
-        setTypewriterText(typewriterTextValue)
-    }, [typewriterTextValue])
+	useEffect(() => {
+		onEditSlate('slateDescription', slateDescription)
+	}, [debouncedDescription])
+
+	const [view, setView] = useState(SLATE_VIEW.noteListing)
+
+	const onSlateLoad = (loadState) => {
+		dispatch(loadSlate({ id: slateId, loading: loadState }))
+	}
+
+	const deleteCurrentNote = (id) => {
+		dispatch(deleteNote({ id }))
+	}
+
+	const onScaling = (id) => {
+		dispatch(scaleNote({ id, scale: true }))
+	}
+
+	const onScalingOff = (id) => {
+		dispatch(scaleNote({ id, scale: false }))
+	}
+
+	const onViewChange = (currentView) => {
+		setView(currentView)
+	}
+
+	useEffect(() => {
+		onSlateLoad(true)
+		setTimeout(() => {
+			onSlateLoad(false)
+		}, 3000)
+	}, [])
 
 	return (
-		<FlexDiv
-			flexDirection="column"
-			alignItems="flex-start"
-			padding={'0px 20px'}
-			customStyle={{ width: '100%' }}
+		<div
+			style={{
+				border: '1px solid #fff',
+				borderRadius: 10,
+				padding: 10,
+				margin: '20px 0px',
+				height: 750,
+				overflow: 'auto',
+				boxShadow: `0px 0px 20px ${colorPalette.light}`,
+				position: 'relative',
+				width: '100%'
+			}}
 		>
-			<Button>
-				<TextWithIcon
-					icon={backIcon}
-					onClick={() => onViewChange(SLATE_VIEW.noteListing)}
-					customStyle={{
-						text: {
-							color: colorPalette.light,
-							fontStyle: 'italic',
-						},
-					}}
+			{notes?.isLoading[slateId] ? 
+				<Skeleton variant='rounded' height={30} style={{ width: '100%', background: 'rgba(240, 237, 229, 0.4)' }} />
+				:
+				<SlateHeader 
+					slateId={slateId} 
+					notes={notes} 
+					onViewChange={onViewChange} 
+					view={view}
+				/>
+			}
+
+			{notes?.isLoading[slateId] ? (
+				<FlexDiv
+					customStyle={{ height: '80%', width: '100%' }}
+					justifyContent="center"
 				>
-					Back to Listing
-				</TextWithIcon>
-			</Button>
+					<SlateLoader loadingText={'Initializing your slateboard...'} />
+				</FlexDiv>)
+                :
+                <>
+                    {(view === SLATE_VIEW.noteListing) &&
+                        <NoteListing 
+                            slateId={slateId} 
+                            notes={notes} 
+                            noteRef={noteRef}
+                            onScaling={onScaling}
+                            onScalingOff={onScalingOff}
+                            deleteCurrentNote={deleteCurrentNote}
+                            floatingDeleteNoteRef={floatingDeleteNoteRef}
+                            setCurrentId={setCurrentId}
+                            currentId={currentId}
+                            view={view}
+                        />
+                    }
+                    {(view === SLATE_VIEW.slateView) &&
+                        <SlateDetails
+                            onViewChange={onViewChange} 
+                            slate={slate}
+                            setIsTypewriterEnabled={setIsTypewriterEnabled}
+                            isTypewriterEnabled={isTypewriterEnabled}
+                            slateDescription={slateDescription}
+                            setSlateDescription={setSlateDescription}
+                            onEditSlate={onEditSlate}
+                        />
+                    }
+                </>
+			}
 
-			<FlexDiv customStyle={{ width: '100%' }}>
-				<Typography color={colorPalette.light}>
-					Slate created at:
-				</Typography>
-				<Typography color={colorPalette.light} fontStyle={'italic'}>
-					{moment(slate?.createdAt).format(
-						dateFormates.fullDateReverse
-					)}
-				</Typography>
-			</FlexDiv>
-
-			<FlexDiv
-				flexDirection="column"
-				alignItems="flex-start"
-				gap={5}
-				customStyle={{ width: '100%', marginBottom: 20 }}
+			<div
+				id='floating-delete-note-button'
+				ref={floatingDeleteNoteRef} 
+				style={{
+					position: 'absolute',
+					bottom: 50,
+					left: '47%',
+					// zIndex: 1001
+				}}
 			>
-				<Typography variant="h4" color={colorPalette.light}>
-					Your Slateboard's Description:
-				</Typography>
-                {isTypewriterEnabled ?
-                    <Typography 
-                        style={{
-                            color: colorPalette.light,
-                            fontStyle: 'italic',
-                            padding: '0px !important',
-                            width: '100%',
-                            textWrap: 'wrap',
-                            whiteSpace: 'pre-wrap',
-                        }}
-                        onMouseDown={() => setIsTypewriterEnabled(false)}
-                    >
-                        {typewriterText}
-                    </Typography>
-                    :
-                    <HoverField
-                        value={slateDescription}
-                        onChange={(event) =>
-                            setSlateDescription(event.target.value)
-                        }
-                        placeholder="Wanna describe?..."
-                        multiline
-                        minRows={1}
-                        maxRows={8}
-                        customStyle={{
-                            input: {
-                                color: colorPalette.light,
-                                fontStyle: 'italic',
-                                padding: '0px !important',
-                            },
-                        }}
-                    />
-                }
-			</FlexDiv>
-
-			<FlexDiv customStyle={{ width: '100%' }}>
-				<Typography color={colorPalette.light}>
-					Slate visibility:
-				</Typography>
-				<Typography color={colorPalette.light} fontStyle={'italic'}>
-					{slate?.isPublic ? 'Public' : 'Private'}
-				</Typography>
-				<Button
-					variant="container"
-					style={{
-						background: 'rgba(240, 237, 229, 0.1)',
-						textTransform: 'none',
-					}}
-                    onClick={handlePrivacyAlertOpen}
-				>
-					<TextWithIcon
-						iconPosition="right"
-						customStyle={{
-							text: {
-								color: colorPalette.light,
-								textTransform: 'none',
-							},
-						}}
-						icon={slate?.isPublic ? publicIcon : privateIcon }
-					>
-						Change
-					</TextWithIcon>
-				</Button>
-			</FlexDiv>
-
-            <BasicAlert 
-                title='Change Slate Privacy?' 
-                body={`Your privacy is currently set to ${slate?.isPublic ? 'Public' : 'Private'}. Do you want to change it?`}
-                open={privacyAlertOpen} 
-                onClose={handlePrivacyAlertClose} 
-                handleSubmit={handlePrivacyAlertConfirm}
-            />
-
-			<FlexDiv customStyle={{ width: '100%' }}>
-				<Button
-					variant="container"
-					style={{ background: 'rgba(240, 237, 229, 0.1)' }}
-				>
-					<TextWithIcon
-						iconPosition="right"
-						icon={likeIcon}
-						customStyle={{
-							text: {
-								color: colorPalette.light,
-								textTransform: 'none',
-							},
+				{currentId &&
+					<FlexDiv
+						// ref={floatingDeleteNoteRef}
+						padding={20} 
+						customStyle={{ 
+							background: colorPalette.danger, 
+							borderRadius: 12, 
+							opacity: 0.5,
+							zIndex: 1000
 						}}
 					>
-						{slate?.tokens?.length} Tokens
-					</TextWithIcon>
-				</Button>
-				<Button
-					variant="container"
-					style={{ background: 'rgba(240, 237, 229, 0.1)' }}
-				>
-					<TextWithIcon
-						iconPosition="right"
-						icon={commentsIcon}
-						customStyle={{
-							text: {
-								color: colorPalette.light,
-								textTransform: 'none',
-							},
-						}}
-					>
-						{slate?.comments?.length} Comments
-					</TextWithIcon>
-				</Button>
-				<Button
-					variant="container"
-					style={{ background: 'rgba(240, 237, 229, 0.1)' }}
-				>
-					<TextWithIcon
-						iconPosition="right"
-						icon={shareIcon}
-						customStyle={{
-							text: {
-								color: colorPalette.light,
-								textTransform: 'none',
-							},
-						}}
-					>
-						{slate?.shares?.length} Shares
-					</TextWithIcon>
-				</Button>
-			</FlexDiv>
-		</FlexDiv>
+						<TextWithIcon 
+							customStyle={{ 
+								text: { 
+									color: colorPalette.light 
+								}
+							}} 
+							icon={deleteNoteIcon}
+						>
+							Delete Note
+						</TextWithIcon>
+					</FlexDiv>
+				}
+			</div>
+			
+		</div>
 	)
 }
 

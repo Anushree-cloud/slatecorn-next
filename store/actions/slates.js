@@ -23,11 +23,12 @@ export const slatesActions = {
         }
     },
     deleteSlate: (state, actions) => {
-        const slateIndex = state.listing.findIndex(slate => slate.id === actions.payload.id)
-        state.listing[slateIndex] = {
-            ...state.listing[slateIndex],
-            isDeleted: true
-        }
+        // const slateIndex = state.listing.findIndex(slate => slate.id === actions.payload.id)
+        // state.listing[slateIndex] = {
+        //     ...state.listing[slateIndex],
+        //     isDeleted: true
+        // }
+        state.listing = state.listing.filter(slate => slate.id !== actions.payload.id)
     },
     deleteAll: (state) => {
         state.listing = []
