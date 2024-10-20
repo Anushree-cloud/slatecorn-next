@@ -19,13 +19,11 @@ function ModuleLayout({
                 height: '100%',
             }}
         >
-            <ModuleHeader moduleKey={moduleKey} sectionKey={sectionKey}>
+            <ModuleHeader>
                 {headerChildren}
             </ModuleHeader>
-
-            <div style={{ maxHeight: window.outerHeight - 200, width: '100%', overflow: 'auto' }}>
-                {children}
-            </div>
+            
+            {children}
 
         </FlexDiv>
     )

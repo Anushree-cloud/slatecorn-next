@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import FlexDiv from '@/shared/FlexDiv'
 import IconButtonCustom from '@/shared/buttons/IconButton'
 import menuOpenIcon from '@/assets/icons/listIconLight.svg'
@@ -8,9 +8,10 @@ import logo from '@/assets/images/logo.png'
 import Image from 'next/image'
 import { colorPalette } from '@/constants/colorPalette'
 import { sideNavigation } from '@/constants/sideNavigation'
-import { useRouter } from 'next/navigation'
+import { redirect, useRouter } from 'next/navigation'
 import { useDispatch, useSelector } from 'react-redux'
 import { openSidebar, closeSidebar, selectSidebarItem } from '@/store/reducers/sidebar'
+import { ROUTES } from '@/constants/routes'
 
 function SideNavigation() {
     const router = useRouter()
@@ -37,16 +38,24 @@ function SideNavigation() {
             })
             return
         }
+        console.log('41=>',item)
         dispatch(selectSidebarItem(item))
         dispatch(closeSidebar())
         router.push(item.path)
     }
 
+    useEffect(() => {
+        const targetModule = sideNavigation.find((section) => section.items.some((subSection) => subSection.path === window.location.pathname))?.items?.find((subSection) => subSection.path === window.location.pathname)
+        if(!targetModule) redirect(ROUTES.MAIN_ROUTES.dashboard)
+        dispatch(selectSidebarItem(targetModule))
+    }, [])
+
 	return (
         <>
             <FlexDiv 
                 flexDirection='column' 
-                padding={'30px 10px'} 
+                padding={'30px 10px'}
+                gap={57}
                 customStyle={{ 
                     height: '100%', 
                     width: '100%' 
@@ -62,6 +71,56 @@ function SideNavigation() {
                         }
                     }} 
                 />
+
+                <FlexDiv flexDirection='column' gap={30}>
+                    {sideNavigation.map((iconSection) => {
+                        return (
+                            <FlexDiv
+                                key={iconSection.key}
+                                flexDirection='column'
+                                gap={20}
+                            >
+                                {iconSection.items.map((iconSubSection) => {
+                                    if(!iconSubSection.sidebar) return <></>
+                                    const isSubSectionSelected = sidebar.selectedItem?.key === iconSubSection.key && !sidebar.selectedItem?.isChild
+                                    return (
+                                        <FlexDiv
+                                            key={iconSubSection.key}
+                                            flexDirection='column'
+                                        >
+                                            <IconButtonCustom
+                                                icon={isSubSectionSelected ? iconSubSection.selectedIcon : iconSubSection.icon}
+                                                onClick={() => onSelectSidebarItem(iconSubSection)}
+                                                customStyle={{
+                                                    icon: {
+                                                        height: 30,
+                                                        width: 30
+                                                    }
+                                                }}
+                                            />
+
+                                            {isChildSectionOpen[iconSubSection.key] && iconSubSection.childItems.map((childIconItem) => {
+                                                const isChildSectionSelected = sidebar.selectedItem?.key === childIconItem.key && sidebar.selectedItem?.isChild
+                                                return (
+                                                    <IconButtonCustom
+                                                        key={childIconItem.key}
+                                                        icon={isChildSectionSelected ? childIconItem.selectedIcon : childIconItem.icon}
+                                                        onClick={() => onSelectSidebarItem(childIconItem)}
+                                                        customStyle={{
+                                                            button: {
+                                                                padding: '0px 10px'
+                                                            }
+                                                        }}
+                                                    />
+                                                )
+                                            })}
+                                        </FlexDiv>
+                                    )
+                                })}
+                            </FlexDiv>    
+                        )
+                    })}
+                </FlexDiv>
             </FlexDiv>
 
             <Drawer
@@ -70,7 +129,7 @@ function SideNavigation() {
                     '& .MuiPaper-root': {
                         backgroundColor: 'rgba(30, 30, 30, 1)',
                         width: 300,
-                        boxShadow: '0px 0px 10px #fff',
+                        boxShadow: 'inset 0px 0px 50px 20px rgb(43, 43, 43)',
                         padding: '30px 10px',
                         display: 'flex',
                         flexDirection: 'column',
@@ -78,7 +137,7 @@ function SideNavigation() {
                     }
                 }}
                 open={sidebar.open} 
-                // onClose={onCloseNavDrawer}
+                onClose={onCloseNavDrawer}
             >
                     <FlexDiv justifyContent='center'>
                         <IconButtonCustom 
@@ -130,7 +189,6 @@ function SideNavigation() {
                                                         padding: 0,
                                                     }}
                                                     onClick={() => onSelectSidebarItem(subSection)}
-                                                    onClose={onCloseNavDrawer}
                                                 >
                                                     <FlexDiv 
                                                         justifyContent='space-between' 

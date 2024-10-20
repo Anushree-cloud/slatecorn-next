@@ -27,6 +27,7 @@ import NoteCard from '@/components/ui/notes/NoteCard'
 import { shortenString } from '@/utils/stringFormatting'
 import SlateAddDialog from '@/components/ui/slates/SlateAddDialog'
 import addPinIcon from '@/assets/icons/addPinIcon.svg'
+import { ROUTES } from '@/constants/routes'
 
 function SlateComponent({ slate, notes, onNavigateToSlate, onPinSlate }) {
 	return (
@@ -167,7 +168,7 @@ function SlatesListing() {
 		}
 	}
 
-	const onNavigateToSlate = (id) => router.push(`/slate/${id}`)
+	const onNavigateToSlate = (id) => router.push(ROUTES.SLATE_ROUTES.view.replace(':slateId', id))
 
 	const onPinSlate = (id, value) => {
 		dispatch(

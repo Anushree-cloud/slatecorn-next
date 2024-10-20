@@ -98,7 +98,7 @@ function SlateHeader({ slateId, notes, onViewChange, view }) {
 			param = slates.listing[currentSlateIndex - 1].id
 		}
 
-		router.push(ROUTES.SLATE_ROUTES.view.replace(':id', param))
+		router.push(ROUTES.SLATE_ROUTES.view.replace(':slateId', param))
 	}
 
 	const onDeleteSlate = () => {

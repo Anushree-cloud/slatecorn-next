@@ -6,84 +6,6 @@ import settingsIconSelected from '@/assets/icons/settingsIconSelected.svg'
 import slateIcon from '@/assets/icons/slateIconLight.svg'
 import slateIconSelected from '@/assets/icons/slateIcon.svg'
 
-
-export const sideNavigation = [
-    {
-        key: 'main',
-        label: 'Main',
-        items: [
-            {
-                key: 'dashboard',
-                label: 'Dashboard',
-                path: ROUTES.MAIN_ROUTES.dashboard,
-                childItems: [],
-                icon: dashboardIcon,
-                selectedIcon: dashboardIconSelected,
-                sidebar: true
-            },
-            {
-                key: 'settings',
-                label: 'Settings',
-                path: ROUTES.MAIN_ROUTES.dashboard,
-                icon: settingsIcon,
-                selectedIcon: settingsIconSelected,
-                sidebar: true,
-                childItems: [
-                    {
-                        key: 'click',
-                        label: 'Click',
-                        path: ROUTES.MAIN_ROUTES.settings,
-                        icon: settingsIcon,
-                        selectedIcon: settingsIconSelected,
-                        sidebar: true
-                    },
-                    {
-                        key: 'click',
-                        label: 'Click',
-                        path: ROUTES.MAIN_ROUTES.settings,
-                        icon: settingsIcon,
-                        selectedIcon: settingsIconSelected,
-                        sidebar: true
-                    },
-                ]
-            },
-        ]
-    },
-    {
-        key: 'slates',
-        label: 'Slates',
-        items: [
-            {
-                key: 'slates',
-                label: 'Listing',
-                path: ROUTES.SLATE_ROUTES.listing,
-                icon: slateIcon,
-                selectedIcon: slateIconSelected,
-                childItems: [],
-                sidebar: true
-            },
-            {
-                key: 'slate',
-                label: 'Details',
-                path: ROUTES.SLATE_ROUTES.view,
-                icon: slateIcon,
-                selectedIcon: slateIconSelected,
-                childItems: [],
-                sidebar: false
-            },
-        ]
-    }
-]
-
-export const initialSelectedItem = {
-    key: 'dashboard',
-    label: 'Dashboard',
-    path: ROUTES.MAIN_ROUTES.dashboard,
-    childItems: [],
-    icon: dashboardIcon,
-    selectedIcon: dashboardIconSelected,
-}
-
 export const MODULES = {
     dashboard: 'dashboard',
     settings: 'settings',
@@ -95,3 +17,92 @@ export const SECTIONS = {
     main: 'main',
     slates: 'slates'
 }
+
+export const initialSelectedItem = {
+    key: 'dashboard',
+    label: 'Dashboard',
+    path: ROUTES.MAIN_ROUTES.dashboard,
+    childItems: [],
+    icon: dashboardIcon,
+    selectedIcon: dashboardIconSelected,
+    sidebar: true,
+    sectionKey: SECTIONS.main
+}
+
+export const sideNavigation = [
+    {
+        key: SECTIONS.main,
+        label: 'Main',
+        items: [
+            {
+                key: 'dashboard',
+                label: 'Dashboard',
+                path: ROUTES.MAIN_ROUTES.dashboard,
+                childItems: [],
+                icon: dashboardIcon,
+                selectedIcon: dashboardIconSelected,
+                sidebar: true,
+                sectionKey: SECTIONS.main
+            },
+            {
+                key: 'settings',
+                label: 'Settings',
+                path: '',
+                icon: settingsIcon,
+                selectedIcon: settingsIconSelected,
+                sidebar: true,
+                sectionKey: SECTIONS.main,
+                childItems: [
+                    {
+                        key: 'user',
+                        label: 'User',
+                        path: ROUTES.MAIN_ROUTES.userSettings,
+                        icon: settingsIcon,
+                        selectedIcon: settingsIconSelected,
+                        sidebar: true,
+                        sectionKey: SECTIONS.main,
+                        subSectionKey: MODULES.settings,
+                        isChild: true,
+                    },
+                    {
+                        key: 'slates',
+                        label: 'Slates',
+                        path: ROUTES.MAIN_ROUTES.slatesSettings,
+                        icon: settingsIcon,
+                        selectedIcon: settingsIconSelected,
+                        sidebar: true,
+                        sectionKey: SECTIONS.main,
+                        subSectionKey: MODULES.settings,
+                        isChild: true,
+                    },
+                ]
+            },
+        ]
+    },
+    {
+        key: SECTIONS.slates,
+        label: 'Slates',
+        items: [
+            {
+                key: 'slates',
+                label: 'Listing',
+                path: ROUTES.SLATE_ROUTES.listing,
+                icon: slateIcon,
+                selectedIcon: slateIconSelected,
+                childItems: [],
+                sidebar: true,
+                sectionKey: SECTIONS.slates
+            },
+            {
+                key: 'slate',
+                label: 'Details',
+                path: ROUTES.SLATE_ROUTES.view,
+                icon: slateIcon,
+                selectedIcon: slateIconSelected,
+                childItems: [],
+                sidebar: false,
+                sectionKey: SECTIONS.slates
+            },
+        ]
+    }
+]

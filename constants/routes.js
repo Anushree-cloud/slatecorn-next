@@ -8,10 +8,14 @@ export const ROUTES = {
     },
     MAIN_ROUTES: {
         dashboard: '/',
-        settings: '/settings',
+        userSettings: '/settings/user',
+        slatesSettings: '/settings/slates',
     },
     SLATE_ROUTES: {
-        listing: '/slate/list',
-        view: '/slate/:slateId',
+        listing: '/slates/list',
+        view: '/slates/:slateId',
+    },
+    PROFILE: {
+        user: '/profile',
     }
 }

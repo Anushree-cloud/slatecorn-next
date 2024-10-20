@@ -4,10 +4,22 @@ import FlexDiv from '@/shared/FlexDiv'
 import { Typography } from '@mui/material'
 import Image from 'next/image'
 import { colorPalette } from '@/constants/colorPalette'
+import { useSelector } from 'react-redux'
 
-function ModuleHeader({ moduleKey, sectionKey, children }) {
-    const section = sideNavigation.find(section => section.key === sectionKey)
-    const module = section.items.find(module => module.key === moduleKey)
+function ModuleHeader({ children }) {
+    const currentModule = useSelector((state) => state.sidebar.selectedItem)
+    
+    const section = sideNavigation.find(section => section?.key === currentModule?.sectionKey) || 'Unknown'
+    
+    const module = (currentModule?.isChild ? 
+        section?.items?.find(module => module?.key === currentModule?.subSectionKey)
+        :
+        section?.items?.find(module => module?.key === currentModule?.key)) || 'Unknown'
+
+    const childModule = currentModule?.isChild ?
+        module?.childItems?.find(module => module?.key === currentModule?.key)
+        : null
+    
     return (
         <FlexDiv
             customStyle={{
@@ -24,7 +36,7 @@ function ModuleHeader({ moduleKey, sectionKey, children }) {
                 }}
             >
                 <Image src={module?.icon} alt="module" width={30} height={30} />
-                <Typography variant='h5' style={{ marginLeft: 10 }} color={colorPalette.light}>{`${section.label} | ${module?.label}`}</Typography>
+                <Typography variant='h5' style={{ marginLeft: 10 }} color={colorPalette.light}>{`${section?.label} | ${module?.label}${ childModule ? ' | ' + childModule?.label : ''}`}</Typography>
             </FlexDiv>
             <>
                 {children}

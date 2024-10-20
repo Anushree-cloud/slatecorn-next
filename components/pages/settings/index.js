@@ -1,3 +1,4 @@
+"use client"
 import React from 'react'
 import { Typography } from '@mui/material'
 import ModuleLayout from '@/components/layouts/modules/ModuleLayout'
@@ -6,7 +7,7 @@ import { colorPalette } from '@/constants/colorPalette'
 import FlexDiv from '@/shared/FlexDiv'
 
 function DashBoard() {
-	const typewriterTextValue = useTypewriterEffect('This DashBoard is looking like your life. Empty!!!!!!!!!!!', 100)
+	const typewriterTextValue = useTypewriterEffect('Picture Abhi Baaki Hain Mere dost!', 100)
 	return (
 		<ModuleLayout>
 			<FlexDiv
