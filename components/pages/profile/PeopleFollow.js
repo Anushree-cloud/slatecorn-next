@@ -11,15 +11,15 @@ function PeopleFollow({ user }) {
 			padding={'0px 20px'}
 			customStyle={{ width: '100%' }}
 		>
-			<Typography style={{ fontStyle: 'italic' }}>
-				<strong style={{ color: colorPalette.highlight }}>
+			<Typography style={{ fontStyle: 'italic', color: colorPalette.light }}>
+				<strong style={{ color: colorPalette.hightLightText }}>
 					{numberWithK(user.followers)}
 				</strong>{' '}
 				people are chasing you!
 			</Typography>
-			<Typography style={{ fontStyle: 'italic' }}>
+			<Typography style={{ fontStyle: 'italic', color: colorPalette.light }}>
 				You are stalking{' '}
-				<strong style={{ color: colorPalette.highlight }}>
+				<strong style={{ color: colorPalette.hightLightText }}>
 					{numberWithK(user.following)}
 				</strong>{' '}
 				people!

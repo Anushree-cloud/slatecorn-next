@@ -3,8 +3,8 @@ import FlexDiv from '@/shared/FlexDiv'
 import { colorPalette } from '@/constants/colorPalette'
 import { Typography } from '@mui/material'
 import TextWithIcon from '@/shared/typography/TextWithIcon'
-import slateIcon from '@/assets/icons/slateIcon.svg'
-import notesIcon from '@/assets/icons/notesIcon.svg'
+import slateIcon from '@/assets/icons/slateIconLight.svg'
+import notesIcon from '@/assets/icons/notesLightIcon.svg'
 import rocketIcon from '@/assets/icons/rocketIcon.svg'
 import smileUpsideDownIcon from '@/assets/icons/smileUpsideDown.svg'
 import timeIcon from '@/assets/icons/timeIcon.svg'
@@ -32,7 +32,7 @@ function ProfileStat({ user }) {
 						fontWeight: 'bold',
 						width: '100%',
 						fontSize: '20px',
-						color: colorPalette.infoDark,
+						color: 'rgb(137 182 229)',
 						textShadow: '2px 2px 4px rgba(0, 0, 0, 0.2)',
 					}}
 				>
@@ -44,11 +44,11 @@ function ProfileStat({ user }) {
 					gap={0}
 					padding={'0px 10px'}
 				>
-					<TextWithIcon icon={likesIcon}>
+					<TextWithIcon icon={likesIcon} customStyle={{ text: { color: colorPalette.light } }}>
 						Tokens Earned{' '}
 						<strong
 							style={{
-								color: colorPalette.highlight,
+								color: colorPalette.hightLightText,
 								fontSize: 20,
 							}}
 						>
@@ -56,11 +56,11 @@ function ProfileStat({ user }) {
 						</strong>
 					</TextWithIcon>
 
-					<TextWithIcon icon={slateIcon}>
+					<TextWithIcon icon={slateIcon} customStyle={{ text: { color: colorPalette.light } }}>
 						Total slate board(s) created{' '}
 						<strong
 							style={{
-								color: colorPalette.highlight,
+								color: colorPalette.hightLightText,
 								fontSize: 20,
 							}}
 						>
@@ -68,11 +68,11 @@ function ProfileStat({ user }) {
 						</strong>
 					</TextWithIcon>
 
-					<TextWithIcon icon={notesIcon}>
+					<TextWithIcon icon={notesIcon} customStyle={{ text: { color: colorPalette.light } }}>
 						Total note(s) created{' '}
 						<strong
 							style={{
-								color: colorPalette.highlight,
+								color: colorPalette.hightLightText,
 								fontSize: 20,
 							}}
 						>
@@ -98,11 +98,11 @@ function ProfileStat({ user }) {
 						fontWeight: 'bold',
 						width: '100%',
 						fontSize: '20px',
-						color: colorPalette.infoDark,
+						color: 'rgb(137 182 229)',
 						textShadow: '2px 2px 4px rgba(0, 0, 0, 0.2)',
 					}}
 				>
-					Your contibution to earth
+					Your contribution to earth
 				</Typography>
 				<FlexDiv
 					flexDirection="column"
@@ -110,11 +110,11 @@ function ProfileStat({ user }) {
 					gap={0}
 					padding={'0px 10px'}
 				>
-					<TextWithIcon icon={rocketIcon}>
+					<TextWithIcon icon={rocketIcon} customStyle={{ text: { color: colorPalette.light } }}>
 						Date you became a human:{' '}
 						<strong
 							style={{
-								color: colorPalette.highlight,
+								color: colorPalette.hightLightText,
 								fontSize: 20,
 							}}
 						>
@@ -125,11 +125,11 @@ function ProfileStat({ user }) {
 						</strong>
 					</TextWithIcon>
 
-					<TextWithIcon icon={smileUpsideDownIcon}>
+					<TextWithIcon icon={smileUpsideDownIcon} customStyle={{ text: { color: colorPalette.light } }}>
 						We know you from:{' '}
 						<strong
 							style={{
-								color: colorPalette.highlight,
+								color: colorPalette.hightLightText,
 								fontSize: 20,
 							}}
 						>
@@ -137,11 +137,11 @@ function ProfileStat({ user }) {
 						</strong>
 					</TextWithIcon>
 
-					<TextWithIcon icon={timeIcon}>
+					<TextWithIcon icon={timeIcon} customStyle={{ text: { color: colorPalette.light } }}>
 						Last you were wasting time here at:{' '}
 						<strong
 							style={{
-								color: colorPalette.highlight,
+								color: colorPalette.hightLightText,
 								fontSize: 20,
 							}}
 						>

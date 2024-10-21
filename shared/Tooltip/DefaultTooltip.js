@@ -8,17 +8,19 @@ const DefaultTooltip = styled(({ className, ...props }) => (
 ))(({ theme }) => ({
     [`& .${tooltipClasses.arrow}`]: {
         color: colorPalette.light,
+        transform: 'translate(0px, 8px)'
     },
     [`& .${tooltipClasses.tooltip}`]: {
-        boxShadow: '0px 2px 16px rgba(225, 229, 235, 0.8)',
+        boxShadow: '0px 2px 5px rgba(225, 229, 235, 0.8)',
         backgroundColor: colorPalette.light,
         color: colorPalette.dark,
         fontFamily: 'Rubik',
         fontWeight: '400',
-        padding: '8px 15px',
+        padding: '4px 15px',
         maxWidth: '350px',
         width: 'max-content',
         fontSize: 14,
+        fontStyle: 'italic',
         // border: '1px solid #dadde9',
     },
 }))

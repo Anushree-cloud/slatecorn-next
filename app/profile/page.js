@@ -1,7 +1,8 @@
+import Profile from '@/components/pages/profile'
 import React from 'react'
 
 const page = () => {
-  return <></>
+  return <Profile />
 }
 
 export default page

@@ -1,3 +1,4 @@
+"use client"
 import React from 'react'
 import FlexDiv from '@/shared/FlexDiv'
 import { useSelector } from 'react-redux'
@@ -17,15 +18,17 @@ function Profile({ onClose }) {
 			flexDirection="column"
 			customStyle={{
 				width: '100%',
-				backgroundColor: colorPalette.background,
+				backgroundColor: colorPalette.bodyBackground,
 				height: '100%',
 			}}
 		>
 			<ProfileImage user={user} onClose={onClose} />
-			<PeopleFollow user={user} />
-			<Bio user={user} />
-			<ProfileStat user={user} />
-			<Interests user={user} />
+			<FlexDiv flexDirection='column' customStyle={{ width: '100%', maxHeight: '100%', overFlowY: 'auto' }}>
+				<PeopleFollow user={user} />
+				<Bio user={user} />
+				<ProfileStat user={user} />
+				<Interests user={user} />
+			</FlexDiv>
 		</FlexDiv>
 	)
 }

@@ -36,7 +36,7 @@ function Bio({ user }) {
 						overflowWrap: 'break-word',
 						fontStyle: 'italic',
 						fontSize: 12,
-						color: colorPalette.dark,
+						color: colorPalette.light,
 					}}
 				>{typewriterTextValue}</Typography>
 				:

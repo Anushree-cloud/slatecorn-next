@@ -1,7 +1,7 @@
 import React from 'react'
 import FlexDiv from '@/shared/FlexDiv'
 import { colorPalette } from '@/constants/colorPalette'
-import { Typography, IconButton as MuiIconButton } from '@mui/material'
+import { Typography, IconButton as MuiIconButton, Button } from '@mui/material'
 import TextWithIcon from '@/shared/typography/TextWithIcon'
 import addIcon from '@/assets/icons/addIcon.svg'
 
@@ -25,14 +25,14 @@ function Interests({ user }) {
 						fontWeight: 'bold',
 						width: '100%',
 						fontSize: '20px',
-						color: colorPalette.infoDark,
+						color: 'rgb(137 182 229)',
 						textShadow: '2px 2px 4px rgba(0, 0, 0, 0.2)',
 					}}
 				>
 					Your Interests
 				</Typography>
 				{!user.interests.length ? (
-					<Typography style={{ padding: '0px 10px' }}>
+					<Typography style={{ padding: '0px 10px', opacity: 0.5, color: colorPalette.light }}>
 						Boring peaple don't have any interest!
 					</Typography>
 				) : (
@@ -50,11 +50,11 @@ function Interests({ user }) {
 						</FlexDiv>
 					))
 				)}
-				<MuiIconButton style={{ borderRadius: 5 }}>
-					<TextWithIcon icon={addIcon} iconHeight={15} iconWidth={15}>
-						Add new interest
+				<Button style={{ background: 'rgba(240, 237, 229, 0.1)', textTransform: 'none', }}>
+					<TextWithIcon icon={addIcon} customStyle={{text:{color: '#000'}}} iconHeight={15} iconWidth={15}>
+						New interest
 					</TextWithIcon>
-				</MuiIconButton>
+				</Button>
 			</FlexDiv>
 		</FlexDiv>
 	)

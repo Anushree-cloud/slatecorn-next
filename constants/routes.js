@@ -7,7 +7,7 @@ export const ROUTES = {
         resetPassword: '/reset-password',
     },
     MAIN_ROUTES: {
-        dashboard: '/',
+        dashboard: '/dashboard',
         userSettings: '/settings/user',
         slatesSettings: '/settings/slates',
     },

@@ -12,7 +12,7 @@ import coverPicture from '@/assets/images/cover.webp'
 import HoverField from '@/shared/textfields/hoverField'
 import { updateUser } from '@/store/reducers/user'
 import { useDispatch } from 'react-redux'
-import { Button, Tooltip } from '@mui/material'
+import { Button, Dialog, Input, Tooltip } from '@mui/material'
 import ProfileImageOverlay from '@/shared/Overlay'
 import TextWithIcon from '@/shared/typography/TextWithIcon'
 
@@ -20,6 +20,23 @@ function ProfileImage({ user, onClose }) {
 	const dispatch = useDispatch()
 	const [currentUserName, setCurrentUserName] = React.useState(user.name)
 	const [isProfileImageClick, setIsProfileImageClick] = React.useState(false)
+	const [currentImage, setCurrentImage] = React.useState(user.image)
+
+	function previewFile() {
+		var preview = document.getElementById('profile-image');
+		var file    = document.getElementById('image-uploading-input').files[0];
+		var reader  = new FileReader();
+	  
+		reader.onloadend = function () {
+		  preview.src = reader.result;
+		}
+	  
+		if (file) {
+		  reader.readAsDataURL(file);
+		} else {
+		  preview.src = "";
+		}
+	}
 
 	const updateUserName = (nameString) => {
 		dispatch(updateUser({
@@ -92,37 +109,60 @@ function ProfileImage({ user, onClose }) {
 					}}
 				/>
 
-				{ isProfileImageClick && <ProfileImageOverlay /> }
+				{/* { isProfileImageClick && <ProfileImageOverlay /> } */}
 				<FlexDiv
 					onClick={() => setIsProfileImageClick(true)}
 					customStyle={{
 						position: 'absolute',
 						backgroundColor: 'white',
-						top: isProfileImageClick ? 250 :120,
-						left: isProfileImageClick ? '46%' : 20,
-						borderRadius: isProfileImageClick ? '5px' : '50%',
+						top: 210,
+						left: 115,
+						borderRadius: '50%',
 						border: '2px solid white',
 						boxShadow: '0px 0px 10px #8A9A9E',
 						width: 100,
 						height: 100,
 						overflow: 'hidden',
-						transform: isProfileImageClick ? 'scale(3.5)' : 'scale(1)',
 						justifyContent: 'center',
 						alignItems: 'flex-start',
 						padding: '5px',
-						zIndex: isProfileImageClick ? 1000 : 1,
 					}}
 				>
 					<Image src={userImage} alt="user" width={100} height={100} />
-					{isProfileImageClick && <FlexDiv customStyle={{ width: '100%' }} flexDirection='column' gap={5}>
-						<Button style={{ background: colorPalette.background }}>
-							<TextWithIcon icon={cameraIcon}>Change you face</TextWithIcon>
-						</Button>
-						<Button style={{ background: colorPalette.background }}>
-							<TextWithIcon icon={closeIcon}>Happy with current face</TextWithIcon>
-						</Button>
-					</FlexDiv>}
 				</FlexDiv>
+
+				<Dialog 
+					open={isProfileImageClick} 
+					onClose={() => setIsProfileImageClick(false)}
+					PaperProps={{
+						height: 'max-content',
+						width: 'max-content',
+					}}
+				>
+					<FlexDiv
+						flexDirection='column'
+						padding={25}
+						onClick={() => setIsProfileImageClick(true)}
+					>
+						<Image
+							id='profile-image'
+							src={userImage} 
+							alt="user" 
+							width={300} 
+							height={300} 
+							style={{ borderRadius: '50%', border: '5px groove rgb(43,43,43)' }}
+						/>
+						<FlexDiv customStyle={{ width: '100%' }} flexDirection='column' gap={5}>
+							<div className='fileUpload'>
+								<input type='file' class="upload" id='image-uploading-input' />
+								<FlexDiv justifyContent='center'>
+									<TextWithIcon customStyle={{text: {color: colorPalette.dark}}} icon={cameraIcon}>Change Your Face</TextWithIcon>
+								</FlexDiv>
+							</div>
+						</FlexDiv>
+						
+					</FlexDiv>
+				</Dialog>
 			</FlexDiv>
 
 			<FlexDiv padding={'20px 20px 0px 20px'}>
@@ -133,6 +173,11 @@ function ProfileImage({ user, onClose }) {
 						shouldDebounce={true}
 						debounceHandler={updateUserName}
 						customClass='profile-name'
+						customStyle={{
+							input: {
+								color: colorPalette.light,
+							}
+						}}
 					/>
 				</Tooltip>
 			</FlexDiv>

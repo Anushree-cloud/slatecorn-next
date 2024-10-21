@@ -12,6 +12,7 @@ import { redirect, useRouter } from 'next/navigation'
 import { useDispatch, useSelector } from 'react-redux'
 import { openSidebar, closeSidebar, selectSidebarItem } from '@/store/reducers/sidebar'
 import { ROUTES } from '@/constants/routes'
+import DefaultTooltip from '@/shared/Tooltip/DefaultTooltip'
 
 function SideNavigation() {
     const router = useRouter()
@@ -38,7 +39,7 @@ function SideNavigation() {
             })
             return
         }
-        console.log('41=>',item)
+        
         dispatch(selectSidebarItem(item))
         dispatch(closeSidebar())
         router.push(item.path)
@@ -46,7 +47,7 @@ function SideNavigation() {
 
     useEffect(() => {
         const targetModule = sideNavigation.find((section) => section.items.some((subSection) => subSection.path === window.location.pathname))?.items?.find((subSection) => subSection.path === window.location.pathname)
-        if(!targetModule) redirect(ROUTES.MAIN_ROUTES.dashboard)
+        // if(!targetModule) redirect(ROUTES.MAIN_ROUTES.dashboard)
         dispatch(selectSidebarItem(targetModule))
     }, [])
 
@@ -61,16 +62,20 @@ function SideNavigation() {
                     width: '100%' 
                 }}
             >
-                <IconButtonCustom 
-                    onClick={onOpenNavDrawer}
-                    icon={menuOpenIcon} 
-                    customStyle={{
-                        icon: {
-                            height: 30,
-                            width: 30
-                        }
-                    }} 
-                />
+                <DefaultTooltip title='Menu' placement='right' arrow>
+                    <span>
+                        <IconButtonCustom
+                            onClick={onOpenNavDrawer}
+                            icon={menuOpenIcon}
+                            customStyle={{
+                                icon: {
+                                    height: 30,
+                                    width: 30
+                                }
+                            }}
+                        />
+                    </span>
+                </DefaultTooltip>
 
                 <FlexDiv flexDirection='column' gap={30}>
                     {sideNavigation.map((iconSection) => {
@@ -88,30 +93,38 @@ function SideNavigation() {
                                             key={iconSubSection.key}
                                             flexDirection='column'
                                         >
-                                            <IconButtonCustom
-                                                icon={isSubSectionSelected ? iconSubSection.selectedIcon : iconSubSection.icon}
-                                                onClick={() => onSelectSidebarItem(iconSubSection)}
-                                                customStyle={{
-                                                    icon: {
-                                                        height: 30,
-                                                        width: 30
-                                                    }
-                                                }}
-                                            />
+                                            <DefaultTooltip title={iconSubSection.label} placement='right' arrow>
+                                                <span>
+                                                    <IconButtonCustom
+                                                        icon={isSubSectionSelected ? iconSubSection.selectedIcon : iconSubSection.icon}
+                                                        onClick={() => onSelectSidebarItem(iconSubSection)}
+                                                        customStyle={{
+                                                            icon: {
+                                                                height: 30,
+                                                                width: 30
+                                                            }
+                                                        }}
+                                                    />
+                                                </span>
+                                            </DefaultTooltip>
 
                                             {isChildSectionOpen[iconSubSection.key] && iconSubSection.childItems.map((childIconItem) => {
                                                 const isChildSectionSelected = sidebar.selectedItem?.key === childIconItem.key && sidebar.selectedItem?.isChild
                                                 return (
-                                                    <IconButtonCustom
-                                                        key={childIconItem.key}
-                                                        icon={isChildSectionSelected ? childIconItem.selectedIcon : childIconItem.icon}
-                                                        onClick={() => onSelectSidebarItem(childIconItem)}
-                                                        customStyle={{
-                                                            button: {
-                                                                padding: '0px 10px'
-                                                            }
-                                                        }}
-                                                    />
+                                                    <DefaultTooltip title={childIconItem.label} placement="right" arrow>
+                                                        <span>
+                                                            <IconButtonCustom
+                                                                key={childIconItem.key}
+                                                                icon={isChildSectionSelected ? childIconItem.selectedIcon : childIconItem.icon}
+                                                                onClick={() => onSelectSidebarItem(childIconItem)}
+                                                                customStyle={{
+                                                                    button: {
+                                                                        padding: '0px 10px'
+                                                                    }
+                                                                }}
+                                                            />
+                                                        </span>
+                                                    </DefaultTooltip>
                                                 )
                                             })}
                                         </FlexDiv>

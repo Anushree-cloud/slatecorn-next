@@ -11,6 +11,7 @@ export const colorPalette = {
   dark: '#2B2B2B',
   background: '#FFFAE3',
   highlight: '#593459',
+  hightLightText: '#F0ED',
   text: '#524e52'
 }
 

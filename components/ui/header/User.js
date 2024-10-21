@@ -1,23 +1,40 @@
 'use client'
 import FlexDiv from '@/shared/FlexDiv'
-import React from 'react'
+import React, { use } from 'react'
 import Image from 'next/image'
 import userImage from '@/assets/images/profile.png'
 import { colorPalette } from '@/constants/colorPalette'
-import { Dialog, Typography } from '@mui/material'
-import Profile from '../../../components/pages/profile'
-import { useSelector } from 'react-redux'
+import { Dialog, MenuItem, Popover, Typography } from '@mui/material'
+import Profile from '@/components/pages/profile'
+import { useDispatch, useSelector } from 'react-redux'
+import TextWithIcon from '@/shared/typography/TextWithIcon'
+import profileIcon from '@/assets/icons/profile.svg'
+import logoutIcon from '@/assets/icons/logout.svg'
+import { redirect, useRouter } from 'next/navigation'
+import { ROUTES } from '@/constants/routes'
+import { login, logout } from '@/store/reducers/user'
 
 function User() {
-	const [isProfileOpen, setIsProfileOpen] = React.useState(false)
+	const dispatch = useDispatch()
+	const router = useRouter()
+	const [isUserMenuOpen, setIsUserMenuOpen] = React.useState(null)
 	const user = useSelector((state) => state.user.user)
 
-	const onProfileClick = () => {
-		setIsProfileOpen(true)
+	const onUserMenuClick = (event) => {
+		setIsUserMenuOpen(event.currentTarget)
 	}
 
-	const onProfileClose = () => {
-		setIsProfileOpen(false)
+	const onUserMenuClose = () => {
+		setIsUserMenuOpen(null)
+	}
+
+	const onUserProfileClick = () => {
+		router.push(ROUTES.PROFILE.user)
+	}
+
+	const onLogout = () => {
+		dispatch(logout())
+		router.push(ROUTES.AUTH_ROUTES.login)
 	}
 
 	return (
@@ -39,11 +56,11 @@ function User() {
 						boxShadow: `0px 0px 10px ${colorPalette.light}`,
 						cursor: 'pointer',
 					}}
-					onClick={onProfileClick}
+					onClick={onUserMenuClick}
 				/>
 			</FlexDiv>
-			<Dialog
-				open={isProfileOpen}
+			{/* <Dialog
+				open={isUserMenuOpen}
 				sx={{
 					'& .MuiPaper-root': {
 						maxWidth: '1200px !important',
@@ -52,8 +69,40 @@ function User() {
 					},
 				}}
 			>
-				<Profile onClose={onProfileClose} />
-			</Dialog>
+				<Profile onClose={onUserMenuClose} />
+			</Dialog> */}
+
+			<Popover
+				id='user-menu' 
+				open={Boolean(isUserMenuOpen)} 
+				anchorEl={isUserMenuOpen} 
+				onClose={onUserMenuClose}
+				anchorOrigin={{
+					vertical: 'bottom',
+					horizontal: 'left',
+				}}
+				transformOrigin={{
+					vertical: 'top',
+					horizontal: 'left',
+				}}
+			>
+				<MenuItem 
+					style={{
+						boxShadow: `inset 0px 0px 5px ${colorPalette.highlight}`
+					}}
+					onClick={onUserProfileClick}
+				>
+					<TextWithIcon icon={profileIcon}>Profile</TextWithIcon>
+				</MenuItem>
+				<MenuItem
+					style={{
+						boxShadow: `inset 0px 0px 5px ${colorPalette.highlight}`
+					}}
+					onClick={onLogout}
+				>
+					<TextWithIcon icon={logoutIcon}>Logout</TextWithIcon>
+				</MenuItem>
+			</Popover>
 		</>
 	)
 }

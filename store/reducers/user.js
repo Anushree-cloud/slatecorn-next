@@ -6,19 +6,21 @@ import { dummyUser } from '../../constants/user'
 const initialState = {
 	user: dummyUser,
 	isLoggedIn: false,
+	isLoading: true
 }
 
 const userSlice = createSlice({
 	name: 'user',
 	initialState,
 	reducers: {
-		login: userActions.login,
+		setIsLoggedIn: userActions.setIsLoggedIn,
 		logout: userActions.logout,
 		setUser: userActions.setUser,
         updateUser: userActions.updateUser,
+		setLoading: userActions.setLoading
 	},
 })
 
-export const { login, logout, setUser, updateUser } = userSlice.actions
+export const { setIsLoggedIn, logout, setUser, updateUser, setLoading } = userSlice.actions
 
 export default userSlice.reducer

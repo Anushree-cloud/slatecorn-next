@@ -9,6 +9,7 @@ import {
 	Typography,
 	Backdrop,
 	CircularProgress,
+	Button,
 } from '@mui/material'
 import addIcon from '@/assets/icons/addIcon.svg'
 import IconButton from '@/shared/buttons/IconButton'
@@ -242,14 +243,14 @@ function SlatesListing() {
 								/>
 							)
 						})}
-					<MuiIconButton
+					<Button
 						onClick={() => setSlateAddDialogOpen(true)}
-						style={{ borderRadius: 5 }}
+						style={{ background: 'rgba(240, 237, 229, 0.1)', textTransform: 'none', }}
 					>
-						<TextWithIcon icon={addIcon}>
+						<TextWithIcon icon={addIcon} customStyle={{text:{color: '#000'}}}>
 							Add Slateboard
 						</TextWithIcon>
-					</MuiIconButton>
+					</Button>
 
 					<Backdrop
 						open={loading}
