@@ -19,23 +19,22 @@
 
 .fileUpload {
 	background: #f4e177;
-	-webkit-border-radius: 15px;
-	-moz-border-radius: 15px;
-	border-radius: 15px;
-	color: #fff;
-	font-size: 1em;
-	font-weight: bold;
-	margin: 0px;
-	overflow: hidden;
-	padding: 14px 16px;
-	position: relative;
-	text-align: center;
-	width: 100%;
-   cursor: pointer;
+    border-radius: 20px;
+    color: #fff;
+    font-size: 1em;
+    font-weight: bold;
+    margin: 0px;
+    overflow: hidden;
+    padding: 10px;
+    position: relative;
+    text-align: center;
+    width: 100%;
+    cursor: pointer;
 }
 .fileUpload:hover, .fileUpload:active, .fileUpload:focus {
 	background: #c7b860;
-  cursor: pointer;
+    cursor: pointer;
+    opacity: 1 !important;
 }
 .fileUpload input.upload {
     position: absolute;
@@ -43,13 +42,15 @@
     right: 0;
     margin: 0;
     padding: 0;
-    font-size: 20px;
-    cursor: pointer;
+    font-size: 15px;
     opacity: 0;
-    filter: alpha(opacity=0);
-    width: 148px;
-    height: 46px;
-  cursor: pointer;
+    filter: alpha(opacity = 0);
+    /* width: 148px; */
+    /* height: 46px; */
+    cursor: pointer;
+    height: 100%;
+    width: 100%;
+    cursor: pointer;
 }
 
 input[type="file"] {

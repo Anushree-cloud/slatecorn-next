@@ -10,7 +10,7 @@ import ProfileStat from './ProfileStat'
 import Interests from './Interests'
 import './profile.css'
 
-function Profile({ onClose }) {
+function Profile() {
 	const user = useSelector((state) => state.user.user)
 
 	return (
@@ -22,7 +22,7 @@ function Profile({ onClose }) {
 				height: '100%',
 			}}
 		>
-			<ProfileImage user={user} onClose={onClose} />
+			<ProfileImage user={user} />
 			<FlexDiv flexDirection='column' customStyle={{ width: '100%', maxHeight: '100%', overFlowY: 'auto' }}>
 				<PeopleFollow user={user} />
 				<Bio user={user} />

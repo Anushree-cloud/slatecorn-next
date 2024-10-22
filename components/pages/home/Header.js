@@ -1,8 +1,10 @@
 import React from 'react'
 import User from '@/components/ui/header/User'
 import FlexDiv from '@/shared/FlexDiv'
-import logo from '@/assets/images/logo.png'
+import logo from '@/public/assets/images/logo.png'
 import Image from 'next/image'
+import IconButtonCustom from '@/shared/buttons/IconButton'
+import notificationIcon from '@/public/assets/icons/notificationLightIcon.svg'
 
 function Header() {
 	return (
@@ -19,7 +21,12 @@ function Header() {
 			<FlexDiv>
 				<Image src={logo} alt="logo" width={100} height={100} />
 			</FlexDiv>
-			<User />
+
+			<FlexDiv>
+				<IconButtonCustom icon={notificationIcon} onClick={() => alert('This is not implemented yet! Duck out!')} />
+				<User />	
+			</FlexDiv>
+			
 		</FlexDiv>
 	)
 }

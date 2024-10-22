@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "next dev",
+    "dev": "next dev --turbo",
     "build": "next build",
     "start": "next start",
     "lint": "next lint"
@@ -19,10 +19,10 @@
     "@types/react-dom": "18.3.0",
     "autoprefixer": "10.4.20",
     "eslint": "9.10.0",
-    "eslint-config-next": "14.2.11",
     "formik": "^2.4.6",
     "moment": "^2.30.1",
     "next": "14.2.11",
+    "nextjs-toploader": "^3.7.15",
     "postcss": "8.4.47",
     "react": "18.3.1",
     "react-dom": "18.3.1",

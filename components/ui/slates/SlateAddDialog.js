@@ -5,7 +5,7 @@ import {
 	Typography,
 } from '@mui/material'
 import IconButton from '@/shared/buttons/IconButton'
-import closeIcon from '@/assets/icons/closeIcon.svg'
+import closeIcon from '@/public/assets/icons/closeIcon.svg'
 import FlexDiv from '@/shared/FlexDiv'
 import FormField from '@/shared/textfields/formField'
 import { Form, Formik } from 'formik'

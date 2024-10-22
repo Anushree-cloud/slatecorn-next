@@ -2,14 +2,14 @@
 import FlexDiv from '@/shared/FlexDiv'
 import React, { use } from 'react'
 import Image from 'next/image'
-import userImage from '@/assets/images/profile.png'
+import userImage from '@/public/assets/images/profile.png'
 import { colorPalette } from '@/constants/colorPalette'
 import { Dialog, MenuItem, Popover, Typography } from '@mui/material'
 import Profile from '@/components/pages/profile'
 import { useDispatch, useSelector } from 'react-redux'
 import TextWithIcon from '@/shared/typography/TextWithIcon'
-import profileIcon from '@/assets/icons/profile.svg'
-import logoutIcon from '@/assets/icons/logout.svg'
+import profileIcon from '@/public/assets/icons/profile.svg'
+import logoutIcon from '@/public/assets/icons/logout.svg'
 import { redirect, useRouter } from 'next/navigation'
 import { ROUTES } from '@/constants/routes'
 import { login, logout } from '@/store/reducers/user'
@@ -34,7 +34,7 @@ function User() {
 
 	const onLogout = () => {
 		dispatch(logout())
-		router.push(ROUTES.AUTH_ROUTES.login)
+		router.push(ROUTES.HOME)
 	}
 
 	return (
@@ -45,32 +45,43 @@ function User() {
 				>
 					{ user.name }
 				</Typography>
-				<Image
-					src={userImage}
-					alt="user"
-					width={50}
-					height={50}
-					style={{
+				<FlexDiv 
+					justifyContent='center' 
+					alignItems='center'
+					customStyle={{
+						height: 50,
+						width: 50,
+						overflow: 'hidden',
+						backgroundColor: colorPalette.light,
 						borderRadius: '50%',
 						border: `2px solid ${colorPalette.light}`,
 						boxShadow: `0px 0px 10px ${colorPalette.light}`,
 						cursor: 'pointer',
 					}}
-					onClick={onUserMenuClick}
-				/>
+				>
+					{!user?.profilePicture ?
+						<Image
+							src={userImage}
+							alt="user"
+							width={50}
+							height={50}
+							onClick={onUserMenuClick}
+						/>
+						:
+						<img
+							src={user?.profilePicture}
+							alt="user"
+							style={{
+								height: '100%',
+								width: '100%',
+								objectFit: 'cover'
+							}}
+							onClick={onUserMenuClick}
+						/>
+					}
+				</FlexDiv>
+
 			</FlexDiv>
-			{/* <Dialog
-				open={isUserMenuOpen}
-				sx={{
-					'& .MuiPaper-root': {
-						maxWidth: '1200px !important',
-						height: '90vh',
-						width: '1200px !important'
-					},
-				}}
-			>
-				<Profile onClose={onUserMenuClose} />
-			</Dialog> */}
 
 			<Popover
 				id='user-menu' 

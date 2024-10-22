@@ -6,6 +6,7 @@ export const ROUTES = {
         forgotPassword: '/forgot-password',
         resetPassword: '/reset-password',
     },
+    HOME: '/',
     MAIN_ROUTES: {
         dashboard: '/dashboard',
         userSettings: '/settings/user',

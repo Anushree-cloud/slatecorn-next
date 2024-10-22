@@ -1,10 +1,14 @@
 import { ROUTES } from './routes'
-import dashboardIcon from '@/assets/icons/dashboardIcon.svg'
-import dashboardIconSelected from '@/assets/icons/dashboardIconSelected.svg'
-import settingsIcon from '@/assets/icons/settingsIcon.svg'
-import settingsIconSelected from '@/assets/icons/settingsIconSelected.svg'
-import slateIcon from '@/assets/icons/slateIconLight.svg'
-import slateIconSelected from '@/assets/icons/slateIcon.svg'
+import dashboardIcon from '@/public/assets/icons/dashboardIcon.svg'
+import dashboardIconSelected from '@/public/assets/icons/dashboardIconSelected.svg'
+import settingsIcon from '@/public/assets/icons/settingsIcon.svg'
+import settingsIconSelected from '@/public/assets/icons/settingsIconSelected.svg'
+import slateIcon from '@/public/assets/icons/slateIconLight.svg'
+import slateIconSelected from '@/public/assets/icons/slateIcon.svg'
+import userSettingsIcon from '@/public/assets/icons/userSettingsLight.svg'
+import userSettingsIconSelected from '@/public/assets/icons/userSettings.svg'
+import slateSettingsIcon from '@/public/assets/icons/slateSettingsLight.svg'
+import slateSettingsIconSelected from '@/public/assets/icons/slateSettings.svg'
 
 export const MODULES = {
     dashboard: 'dashboard',
@@ -57,8 +61,8 @@ export const sideNavigation = [
                         key: 'user',
                         label: 'User',
                         path: ROUTES.MAIN_ROUTES.userSettings,
-                        icon: settingsIcon,
-                        selectedIcon: settingsIconSelected,
+                        icon: userSettingsIcon,
+                        selectedIcon: userSettingsIconSelected,
                         sidebar: true,
                         sectionKey: SECTIONS.main,
                         subSectionKey: MODULES.settings,
@@ -68,8 +72,8 @@ export const sideNavigation = [
                         key: 'slates',
                         label: 'Slates',
                         path: ROUTES.MAIN_ROUTES.slatesSettings,
-                        icon: settingsIcon,
-                        selectedIcon: settingsIconSelected,
+                        icon: slateSettingsIcon,
+                        selectedIcon: slateSettingsIconSelected,
                         sidebar: true,
                         sectionKey: SECTIONS.main,
                         subSectionKey: MODULES.settings,

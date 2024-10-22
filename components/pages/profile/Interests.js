@@ -3,7 +3,7 @@ import FlexDiv from '@/shared/FlexDiv'
 import { colorPalette } from '@/constants/colorPalette'
 import { Typography, IconButton as MuiIconButton, Button } from '@mui/material'
 import TextWithIcon from '@/shared/typography/TextWithIcon'
-import addIcon from '@/assets/icons/addIcon.svg'
+import addIcon from '@/public/assets/icons/addIcon.svg'
 
 function Interests({ user }) {
 	return (

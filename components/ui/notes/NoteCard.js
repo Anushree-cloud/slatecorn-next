@@ -10,7 +10,7 @@ import useDebounce from '@/shared/hooks/useDebounce'
 import { useDispatch } from 'react-redux'
 import { deleteNote, dragNote, rePosition } from '@/store/reducers/notes'
 import IconButtonCustom from '@/shared/buttons/IconButton'
-import moveIcon from '@/assets/icons/moveLight.svg'
+import moveIcon from '@/public/assets/icons/moveLight.svg'
 import CardButton from '@/shared/buttons/CardButton'
 
 const NoteCard = ({

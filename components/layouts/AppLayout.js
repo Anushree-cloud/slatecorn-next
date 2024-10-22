@@ -12,6 +12,7 @@ import { login, setIsLoggedIn, setLoading } from '@/store/reducers/user'
 import { selectSidebarItem } from '@/store/reducers/sidebar'
 import { initialSelectedItem } from '@/constants/sideNavigation'
 import { useRouter } from 'next/navigation'
+import NextTopLoader from 'nextjs-toploader';
 
 function AppLayout(props) {
     const dispatch = useDispatch()
@@ -26,7 +27,7 @@ function AppLayout(props) {
         //     dispatch(selectSidebarItem(initialSelectedItem))
         // }
 		if(localStorage.getItem('isLoggedIn') && authRoutes.includes(window.location.pathname)) {
-			router.push(ROUTES.MAIN_ROUTES.dashboard)
+			router.push(ROUTES.HOME)
 		}
         dispatch(setIsLoggedIn())
         setTimeout(() => dispatch(setLoading(false)), 2000)
@@ -70,6 +71,7 @@ function AppLayout(props) {
                             <Header />
 
                             {/* Layout */}
+                            
                             <FlexDiv justifyContent='center' customStyle={{ width: '100%' }}>
                                 {props.children}
                             </FlexDiv>

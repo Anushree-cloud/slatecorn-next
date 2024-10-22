@@ -15,7 +15,7 @@ export default function PageRoot() {
         dispatch(setIsLoggedIn())
         dispatch(selectSidebarItem(initialSelectedItem))
         setTimeout(() => dispatch(setLoading(false)), 1500)
-        router.push(ROUTES.MAIN_ROUTES.dashboard)
+        router.push(ROUTES.HOME)
 	}
 	return (
 		<>

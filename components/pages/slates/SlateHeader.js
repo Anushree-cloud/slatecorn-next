@@ -3,16 +3,16 @@ import { MenuItem, Popover, Tooltip, Typography } from '@mui/material'
 import FlexDiv from '@/shared/FlexDiv'
 import TextWithIcon from '@/shared/typography/TextWithIcon'
 import IconButton from '@/shared/buttons/IconButton'
-import allLikesIcon from '@/assets/icons/allLikes.svg'
-import addPinIcon from '@/assets/icons/addPinIcon.svg'
-import menuIcon from '@/assets/icons/menuHorizontal.svg'
-import addNotesIcon from '@/assets/icons/addLightIcon.svg'
-import rearrangeIcon from '@/assets/icons/rearrangeLightIcon.svg'
-import deleteAllIcon from '@/assets/icons/deleteAllLightIcon.svg'
-import totalNotesIcon from '@/assets/icons/notesLightIcon.svg'
-import pinnedIcon from '@/assets/icons/pinnedIcon.svg'
-import nextIcon from '@/assets/icons/nextLightIcon.svg'
-import prevIcon from '@/assets/icons/previousLightIcon.svg'
+import allLikesIcon from '@/public/assets/icons/allLikes.svg'
+import addPinIcon from '@/public/assets/icons/addPinIcon.svg'
+import menuIcon from '@/public/assets/icons/menuHorizontal.svg'
+import addNotesIcon from '@/public/assets/icons/addLightIcon.svg'
+import rearrangeIcon from '@/public/assets/icons/rearrangeLightIcon.svg'
+import deleteAllIcon from '@/public/assets/icons/deleteAllLightIcon.svg'
+import totalNotesIcon from '@/public/assets/icons/notesLightIcon.svg'
+import pinnedIcon from '@/public/assets/icons/pinnedIcon.svg'
+import nextIcon from '@/public/assets/icons/nextLightIcon.svg'
+import prevIcon from '@/public/assets/icons/previousLightIcon.svg'
 import { useDispatch, useSelector } from 'react-redux'
 import { addNote, deleteAll, rearrange, reAssignMovingPoints } from '@/store/reducers/notes'
 import { colorPalette } from '@/constants/colorPalette'
@@ -21,8 +21,8 @@ import { shortenString } from '@/utils/stringFormatting'
 import { deleteSlate, pinSlate } from '@/store/reducers/slates'
 import { useRouter } from 'next/navigation'
 import { SLATE_VIEW } from '@/constants/slates'
-import listIcon from '@/assets/icons/listIcon.svg'
-import deleteIcon from '@/assets/icons/deleteIcon.svg'
+import listIcon from '@/public/assets/icons/listIcon.svg'
+import deleteIcon from '@/public/assets/icons/deleteIcon.svg'
 import BasicAlert from '@/shared/alerts/BasicAlert'
 import CardButton from '@/shared/buttons/CardButton'
 import { ROUTES } from '@/constants/routes'
@@ -153,112 +153,128 @@ function SlateHeader({ slateId, notes, onViewChange, view }) {
 							placement="bottom"
 							arrow
 						>
-							<TextWithIcon
-								icon={allLikesIcon}
-								customStyle={{
-									text: { color: colorPalette.light },
-								}}
-							>
-								{slate?.tokens?.length}
-							</TextWithIcon>
+							<span>
+								<TextWithIcon
+									icon={allLikesIcon}
+									customStyle={{
+										text: { color: colorPalette.light },
+									}}
+								>
+									{slate?.tokens?.length}
+								</TextWithIcon>
+							</span>
 						</Tooltip>
 						<Tooltip
 							title={`${slate?.tokens} loved your board!`}
 							placement="bottom"
 							arrow
 						>
-							<TextWithIcon
-								icon={totalNotesIcon}
-								customStyle={{
-									text: { color: colorPalette.light },
-								}}
-							>
-								{
-									notes.listing?.filter(
-										(noteItem) => noteItem?.slateId === slateId
-									)?.length
-								}
-							</TextWithIcon>
+							<span>
+								<TextWithIcon
+									icon={totalNotesIcon}
+									customStyle={{
+										text: { color: colorPalette.light },
+									}}
+								>
+									{
+										notes.listing?.filter(
+											(noteItem) => noteItem?.slateId === slateId
+										)?.length
+									}
+								</TextWithIcon>
+							</span>
 						</Tooltip>
 					</FlexDiv>
 				</FlexDiv>
 
 				<FlexDiv>
 					<Tooltip title={`Add a note`} placement="bottom" arrow>
-						<IconButton
-							icon={prevIcon}
-							onClick={() => onNavigating('prev')}
-							disabled={isDisabled.prev}
-							customStyle={{
-								icon: { width: 30, height: 30 },
-								button: {
-									boxShadow: `0px 0px 5px ${colorPalette.light}`,
-									opacity: isDisabled.prev ? 0.2 : 1,
-									padding: 3,
-								}
-							}}
-						/>
+						<span>
+							<IconButton
+								icon={prevIcon}
+								onClick={() => onNavigating('prev')}
+								disabled={isDisabled.prev}
+								customStyle={{
+									icon: { width: 30, height: 30 },
+									button: {
+										boxShadow: `0px 0px 5px ${colorPalette.light}`,
+										opacity: isDisabled.prev ? 0.2 : 1,
+										padding: 3,
+									}
+								}}
+							/>
+						</span>
 					</Tooltip>
 					<Tooltip title={`Add a note`} placement="bottom" arrow>
-						<IconButton
-							icon={nextIcon}
-							onClick={() => onNavigating('next')}
-							disabled={isDisabled.next}
-							customStyle={{
-								icon: { width: 30, height: 30 },
-								button: {
-									boxShadow: `0px 0px 5px ${colorPalette.light}`,
-									opacity: isDisabled.next ? 0.2 : 1,
-									padding: 3,
-								}
-							}}
-						/>
+						<span>
+							<IconButton
+								icon={nextIcon}
+								onClick={() => onNavigating('next')}
+								disabled={isDisabled.next}
+								customStyle={{
+									icon: { width: 30, height: 30 },
+									button: {
+										boxShadow: `0px 0px 5px ${colorPalette.light}`,
+										opacity: isDisabled.next ? 0.2 : 1,
+										padding: 3,
+									}
+								}}
+							/>
+						</span>
 					</Tooltip>
 				</FlexDiv>
 			</FlexDiv>
 
 			<FlexDiv>
 				<Tooltip title={`Add a note`} placement="bottom" arrow>
-					<IconButton 
-						icon={addNotesIcon} 
-						onClick={onAddClick} 
-						disabled={isDisabled.add}
-						customStyle={{
-							button: {
-								opacity: isDisabled.add ? 0.2 : 1
-							}
-						}}
-					/>
+					<span>
+						<IconButton 
+							icon={addNotesIcon} 
+							onClick={onAddClick} 
+							disabled={isDisabled.add}
+							customStyle={{
+								button: {
+									opacity: isDisabled.add ? 0.2 : 1
+								}
+							}}
+						/>
+					</span>
 				</Tooltip>
 				<Tooltip title={`Pin this slate?`} placement="bottom" arrow>
-					<IconButton
-						icon={slate?.pinned ? pinnedIcon : addPinIcon}
-						onClick={onPinClick}
-					/>
+					<span>
+						<IconButton
+							icon={slate?.pinned ? pinnedIcon : addPinIcon}
+							onClick={onPinClick}
+						/>
+					</span>
 				</Tooltip>
 				<Tooltip title={`Rearrange notes`} placement="bottom" arrow>
-					<IconButton
-						icon={rearrangeIcon}
-						onClick={onRearrangeClick}
-						disabled={isDisabled.rearrange}
-						customStyle={{
-							button: {
-								opacity: isDisabled.rearrange ? 0.2 : 1
-							}
-						}}
-					/>
+					<span>
+						<IconButton
+							icon={rearrangeIcon}
+							onClick={onRearrangeClick}
+							disabled={isDisabled.rearrange}
+							customStyle={{
+								button: {
+									opacity: isDisabled.rearrange ? 0.2 : 1
+								}
+							}}
+						/>
+					</span>
 				</Tooltip>
 				<Tooltip title={`Delete all notes!`} placement="bottom" arrow>
-					<IconButton
-						icon={deleteAllIcon}
-						onClick={() => deleteAllNotesPopoverOpen(true)}
-						disabled={isDisabled.delete}
-						customStyle={{
-							button: {
-								opacity: isDisabled.delete ? 0.2 : 1
-							}
-						}}
-					/>
+					<span>
+						<IconButton
+							icon={deleteAllIcon}
+							onClick={() => deleteAllNotesPopoverOpen(true)}
+							disabled={isDisabled.delete}
+							customStyle={{
+								button: {
+									opacity: isDisabled.delete ? 0.2 : 1
+								}
+							}}
+						/>
+					</span>
 				</Tooltip>
 				<IconButton icon={menuIcon} onClick={(event) => setSlateMenu(event.currentTarget)} />
 			</FlexDiv>

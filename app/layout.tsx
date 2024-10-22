@@ -3,6 +3,7 @@ import type { Metadata } from 'next'
 import { Inter } from 'next/font/google'
 import Root from '../components/layouts/Root'
 import Head from 'next/head'
+import NextTopLoader from 'nextjs-toploader';
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -21,7 +22,10 @@ export default function RootLayout({
         <Head>
           <title>SlateCorn</title>
         </Head>
-        <body className={inter.className}><Root>{children}</Root></body>
+        <body className={inter.className}>
+          <NextTopLoader />
+          <Root>{children}</Root>
+        </body>
     </html>
   )
 }
