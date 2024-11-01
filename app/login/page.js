@@ -12,6 +12,8 @@ export default function PageRoot() {
     const dispatch = useDispatch()
     const router = useRouter()
 	const onLogin = () => {
+		//getting user data from backend
+		//....
         dispatch(setIsLoggedIn())
         dispatch(selectSidebarItem(initialSelectedItem))
         setTimeout(() => dispatch(setLoading(false)), 1500)
@@ -19,6 +21,7 @@ export default function PageRoot() {
 	}
 	return (
 		<>
+			<input name='email' type='text' placeholder='Email' />
 			<Button onClick={onLogin}>Login</Button>
 		</>
 	)
