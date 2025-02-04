@@ -3,12 +3,15 @@ import React from 'react'
 import { Provider } from 'react-redux'
 import { store } from '../../store'
 import AppLayout from '@/components/layouts/AppLayout'
+import { SessionProvider } from 'next-auth/react'
 
-function Root(props) {
+function Root({session, ...props}) {
 	return (
-		<Provider store={store}>
-			<AppLayout {...props} />
-		</Provider>
+		<SessionProvider session={session}>
+			<Provider store={store}>
+				<AppLayout {...props} />
+			</Provider>
+		</SessionProvider>
 	)
 }
 

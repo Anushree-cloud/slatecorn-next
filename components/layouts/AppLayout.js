@@ -19,7 +19,7 @@ function AppLayout(props) {
     const router = useRouter()
 
     const {isLoggedIn, isLoading} = useSelector((state) => state.user)
-
+    console.log('22=>',isLoggedIn, 'isLoggedin from app layout')
 	const authRoutes = Object.values(ROUTES.AUTH_ROUTES)
 
 	useEffect(() => {
@@ -29,7 +29,7 @@ function AppLayout(props) {
 		if(localStorage.getItem('isLoggedIn') && authRoutes.includes(window.location.pathname)) {
 			router.push(ROUTES.HOME)
 		}
-        dispatch(setIsLoggedIn())
+        // dispatch(setIsLoggedIn())
         setTimeout(() => dispatch(setLoading(false)), 2000)
 	}, [])
 

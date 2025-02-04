@@ -13,7 +13,7 @@ export const userActions = {
 		state.isLoggedIn = false
 	},
 	setUser: (state, actions) => {
-		return state
+		state.user = actions.payload
 	},
     updateUser: (state, actions) => {
         state.user = actions.payload

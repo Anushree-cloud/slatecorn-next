@@ -31,12 +31,12 @@ function Interests({ user }) {
 				>
 					Your Interests
 				</Typography>
-				{!user.interests.length ? (
+				{!user.interests?.length ? (
 					<Typography style={{ padding: '0px 10px', opacity: 0.5, color: colorPalette.light }}>
 						Boring peaple don't have any interest!
 					</Typography>
 				) : (
-					user.interests.map((interest, interestIndex) => (
+					user.interests?.map((interest, interestIndex) => (
 						<FlexDiv
 							key={interestIndex}
 							flexDirection="column"
@@ -45,7 +45,7 @@ function Interests({ user }) {
 						>
 							<Typography>{interest?.name}</Typography>
 							<Typography>
-								{interest?.keywords.join(', ')}
+								{interest?.keywords?.join(', ')}
 							</Typography>
 						</FlexDiv>
 					))

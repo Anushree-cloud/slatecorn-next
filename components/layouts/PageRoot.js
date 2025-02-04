@@ -20,6 +20,6 @@ export default function PageRoot() {
 			router.prefetch(ROUTES.SLATE_ROUTES.view)
 		}
 	}, [isLoggedIn])
-
+	console.log('23=>','page root')
 	return isLoggedIn ? redirect(ROUTES.MAIN_ROUTES.dashboard) : redirect(ROUTES.AUTH_ROUTES.login)
 }

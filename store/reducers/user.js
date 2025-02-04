@@ -4,7 +4,7 @@ import { userActions } from '../actions/user'
 import { dummyUser } from '../../constants/user'
 
 const initialState = {
-	user: dummyUser,
+	user: {},
 	isLoggedIn: false,
 	isLoading: true
 }

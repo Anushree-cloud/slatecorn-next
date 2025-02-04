@@ -18,7 +18,7 @@ import userImage from '@/public/assets/images/profile.png'
 
 function ProfileImage({ user }) {
 	const dispatch = useDispatch()
-	const [currentUserName, setCurrentUserName] = React.useState(user.name)
+	const [currentUserName, setCurrentUserName] = React.useState(user?.name)
 	const [userPicture, setUserPicture] = React.useState({
 		profilePicture: user.profilePicture,
 		coverPicture: user.coverPicture

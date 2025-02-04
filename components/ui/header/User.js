@@ -43,7 +43,7 @@ function User() {
 				<Typography
 					style={{ fontWeight: 'bold', color: colorPalette.light }}
 				>
-					{ user.name }
+					{ user?.name }
 				</Typography>
 				<FlexDiv 
 					justifyContent='center' 
