@@ -1,5 +1,5 @@
 import nodemailer from 'nodemailer'
-import { EMAIL_TYPE } from '@/constants/mailer'
+import { EMAIL_TYPE } from '../constants/mailer'
 import User from '../models/user'
 import bcrypt from 'bcrypt'
 

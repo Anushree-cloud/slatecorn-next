@@ -1,7 +1,7 @@
 import React from 'react'
 import Tooltip, { tooltipClasses }  from '@mui/material/Tooltip'
 import { styled } from '@mui/material/styles'
-import { colorPalette } from '@/constants/colorPalette'
+import { colorPalette } from '../../constants/colorPalette'
 
 const DefaultTooltip = styled(({ className, ...props }) => (
     <Tooltip {...props} classes={{ popper: className }} />

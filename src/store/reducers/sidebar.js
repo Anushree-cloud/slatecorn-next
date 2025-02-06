@@ -1,8 +1,8 @@
 'use client'
 import { createSlice } from '@reduxjs/toolkit'
 import { sidebarActions } from '../actions/sidebar'
-import { initialSelectedItem, sideNavigation } from '@/constants/sideNavigation'
-import { ROUTES } from '@/constants/routes'
+import { initialSelectedItem, sideNavigation } from '../../constants/sideNavigation'
+import { ROUTES } from '../../constants/routes'
 
 const routeName = window.location.pathname === '/' ? ROUTES.MAIN_ROUTES.dashboard : window.location.pathname
 

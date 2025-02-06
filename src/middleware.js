@@ -1,10 +1,10 @@
 import { NextResponse } from 'next/server'
-import { ROUTES } from '@/constants/routes'
+import { ROUTES } from '../src/constants/routes'
 
 export async function middleware(request) {
 	const pathname = request.nextUrl.pathname
 	const isPublicPath = Object.values(ROUTES.AUTH_ROUTES).includes(pathname)
-	const userToken = cookies.get('token') || ''
+	const userToken = request.cookies.get('token') || ''
 
 	if (isPublicPath && userToken) {
 		return NextResponse.redirect(

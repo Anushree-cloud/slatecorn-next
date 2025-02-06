@@ -2,7 +2,7 @@
 import React from 'react'
 import { Provider } from 'react-redux'
 import { store } from '../../store'
-import AppLayout from '@/components/layouts/AppLayout'
+import AppLayout from '../layouts/AppLayout'
 import { SessionProvider } from 'next-auth/react'
 
 function Root({session, ...props}) {

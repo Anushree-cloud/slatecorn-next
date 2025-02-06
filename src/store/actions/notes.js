@@ -1,4 +1,4 @@
-import { dateFormates } from "@/constants/date"
+import { dateFormates } from "../../constants/date"
 import moment from "moment"
 
 export const notesActions = {

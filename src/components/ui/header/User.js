@@ -1,18 +1,17 @@
 'use client'
-import FlexDiv from '@/shared/FlexDiv'
+import FlexDiv from '../../../shared/FlexDiv'
 import React, { use } from 'react'
 import Image from 'next/image'
 import userImage from '@/public/assets/images/profile.png'
-import { colorPalette } from '@/constants/colorPalette'
+import { colorPalette } from '../../../constants/colorPalette'
 import { Dialog, MenuItem, Popover, Typography } from '@mui/material'
-import Profile from '@/components/pages/profile'
 import { useDispatch, useSelector } from 'react-redux'
-import TextWithIcon from '@/shared/typography/TextWithIcon'
+import TextWithIcon from '../../../shared/typography/TextWithIcon'
 import profileIcon from '@/public/assets/icons/profile.svg'
 import logoutIcon from '@/public/assets/icons/logout.svg'
 import { redirect, useRouter } from 'next/navigation'
-import { ROUTES } from '@/constants/routes'
-import { login, logout } from '@/store/reducers/user'
+import { ROUTES } from '../../../constants/routes'
+import { login, logout } from '../../../store/reducers/user'
 
 function User() {
 	const dispatch = useDispatch()

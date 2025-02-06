@@ -1,7 +1,6 @@
 'use client'
 import { createSlice } from '@reduxjs/toolkit'
 import { userActions } from '../actions/user'
-import { dummyUser } from '../../constants/user'
 
 const initialState = {
 	user: {},

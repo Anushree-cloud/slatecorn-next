@@ -3,23 +3,18 @@ import React, { useEffect, useState } from 'react'
 import { Provider, useDispatch, useSelector } from 'react-redux'
 import { store } from '../../store'
 import Header from '../pages/home/Header'
-import FlexDiv from '@/shared/FlexDiv'
-import SideNavigation from '@/components/pages/home/SideNavigation'
+import FlexDiv from '../../shared/FlexDiv'
+import SideNavigation from '../../components/pages/home/SideNavigation'
 import { CircularProgress } from '@mui/material'
-import { ROUTES } from '@/constants/routes'
-import { redirect } from 'next/navigation'
-import { login, setIsLoggedIn, setLoading } from '@/store/reducers/user'
-import { selectSidebarItem } from '@/store/reducers/sidebar'
-import { initialSelectedItem } from '@/constants/sideNavigation'
+import { ROUTES } from '../../constants/routes'
+import { setLoading } from '../../store/reducers/user'
 import { useRouter } from 'next/navigation'
-import NextTopLoader from 'nextjs-toploader';
 
 function AppLayout(props) {
     const dispatch = useDispatch()
     const router = useRouter()
 
     const {isLoggedIn, isLoading} = useSelector((state) => state.user)
-    console.log('22=>',isLoggedIn, 'isLoggedin from app layout')
 	const authRoutes = Object.values(ROUTES.AUTH_ROUTES)
 
 	useEffect(() => {

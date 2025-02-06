@@ -1,8 +1,7 @@
 import React from 'react'
-import FlexDiv from '@/shared/FlexDiv'
+import FlexDiv from '../../shared/FlexDiv'
 import Image from 'next/image'
 import { Typography } from '@mui/material'
-import { colorPalette } from '@/constants/colorPalette'
 
 function TextWithIcon({
 	icon,
