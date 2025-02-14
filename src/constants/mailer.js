@@ -61,12 +61,12 @@ export const verifyMailHTML = `<!DOCTYPE html>
     <div class="container">
         <h2>Verify Your Email</h2>
         <p>Hello <strong>[USER_NAME]</strong>,</p>
-        <p>Thank you for signing up for <strong>POPCORN.AI</strong>! Please verify your email address by clicking the button below:</p>
+        <p>Thank you for signing up for <strong>SLATECORN</strong>! Please verify your email address by clicking the button below:</p>
         <a href="[VEARIFICATION_LINK]" class="btn">Verify Email</a>
         <p>If the button doesn’t work, copy and paste this link into your browser:</p>
-        <p><a href="[VEARIFICATION_LINK]">[VEARIFICATION_LINK]</a></p>
+        <p><a href="[VEARIFICATION_LINK]">[VERIFICATION_LINK]</a></p>
         <p>This link will expire in <strong>1 hour</strong>. If you didn’t create this account, please ignore this email.</p>
-        <p class="footer">Best, <br> <strong>Popcorn.ai Team</strong> <br> <a href="popcorn.ai">Popcorn.ai</a></p>
+        <p class="footer">Best, <br> <strong>Slatcorn Team</strong> <br> <a href="popcorn.ai">Slatcorn.ai</a></p>
     </div>
 </body>
 </html>

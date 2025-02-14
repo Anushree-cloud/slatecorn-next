@@ -2,8 +2,9 @@ import { connectDB } from '../../../dbConfig/dbConfig'
 import { success, error } from '../../../macros/response'
 import User from '../../../models/user'
 import bcrypt from 'bcrypt'
-import { EMAIL_SUBJECT, EMAIL_TYPE, verifyMailHTML } from '../../../constants/mailer'
+import { EMAIL_SUBJECT, verifyMailHTML } from '../../../constants/mailer'
 import { sendMail } from '../../../utils/mailer'
+import { v4 as uuid } from 'uuidv4'
 
 connectDB()
 
@@ -21,21 +22,28 @@ export async function POST(req) {
     
         const salt = await bcrypt.genSalt(10)
         const hashedPassword = await bcrypt.hash(requestBody.password, salt)
+
+        const verificationToken = await bcrypt.hash(uuid(), 10)
     
-        const newUser = new User({ ...requestBody, password: hashedPassword })
+        const newUser = new User({ 
+            ...requestBody, 
+            password: hashedPassword,
+            verifyToken: verificationToken,
+            verifyTokenExpiry: Date.now() + 3600000 //token set for one hour
+        })
         const newUserData = await newUser.save()
     
         console.log('========================signup: newUser========================')
         console.log(newUserData)
         console.log('====================================================================')
     
-        const html = verifyMailHTML.replace('[USER_NAME]', newUserData.name)
+        let html = verifyMailHTML.replace('[USER_NAME]', newUserData.name)
+        html = html.replace('[VERIFICATION_LINK]', `${process.env.DOMAIN}/verifyemail?token=${verificationToken}`)
+
         await sendMail(
             newUserData.email,
             EMAIL_SUBJECT.VERIFY,
             html,
-            EMAIL_TYPE.VERIFY,
-            newUserData._id
         )
     
         return success({ 
