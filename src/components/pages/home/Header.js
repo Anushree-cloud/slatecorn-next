@@ -1,10 +1,10 @@
 import React from 'react'
 import User from '../../ui/header/User'
 import FlexDiv from '../../../shared/FlexDiv'
-import logo from '@/public/assets/images/logo.png'
+import logo from '../../../../public/assets/images/logo.png'
 import Image from 'next/image'
 import IconButtonCustom from '../../../shared/buttons/IconButton'
-import notificationIcon from '@/public/assets/icons/notificationLightIcon.svg'
+import notificationIcon from '../../../../public/assets/icons/notificationLightIcon.svg'
 
 function Header() {
 	return (

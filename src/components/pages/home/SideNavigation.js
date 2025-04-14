@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react'
 import FlexDiv from '../../../shared/FlexDiv'
 import IconButtonCustom from '../../../shared/buttons/IconButton'
-import menuOpenIcon from '@/public/assets/icons/listIconLight.svg'
+import menuOpenIcon from '../../../../public/assets/icons/listIconLight.svg'
 import { Drawer, Icon, MenuItem, Typography } from '@mui/material'
 import backIcon from '../../../../public/assets/icons/backIconLight.svg'
 import Image from 'next/image'

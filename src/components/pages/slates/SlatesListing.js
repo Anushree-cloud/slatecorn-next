@@ -11,23 +11,19 @@ import {
 	CircularProgress,
 	Button,
 } from '@mui/material'
-import addIcon from '@/public/assets/icons/addIcon.svg'
+import addIcon from '../../../../public/assets/icons/addIcon.svg'
 import IconButton from '@/shared/buttons/IconButton'
-import closeIcon from '@/public/assets/icons/closeIcon.svg'
 import FlexDiv from '@/shared/FlexDiv'
-import FormField from '@/shared/textfields/formField'
 import { addSlate, pinSlate } from '@/store/reducers/slates'
-import { Form, Formik, useFormik } from 'formik'
 import CardButton from '@/shared/buttons/CardButton'
 import { useRouter } from 'next/navigation'
-import infoIcon from '@/public/assets/icons/infoLightIcon.svg'
-import moveIcon from '@/public/assets/icons/moveLight.svg'
-import pinIcon from '@/public/assets/icons/addPinIcon.svg'
-import pinnedIcon from '@/public/assets/icons/pinnedIcon.svg'
+import infoIcon from '../../../../public/assets/icons/infoLightIcon.svg'
+import moveIcon from '../../../../public/assets/icons/moveLight.svg'
+import pinnedIcon from '../../../../public/assets/icons/pinnedIcon.svg'
 import NoteCard from '@/components/ui/notes/NoteCard'
 import { shortenString } from '@/utils/stringFormatting'
 import SlateAddDialog from '@/components/ui/slates/SlateAddDialog'
-import addPinIcon from '@/public/assets/icons/addPinIcon.svg'
+import addPinIcon from '../../../../public/assets/icons/addPinIcon.svg'
 import { ROUTES } from '@/constants/routes'
 
 function SlateComponent({ slate, notes, onNavigateToSlate, onPinSlate }) {

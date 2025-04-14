@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react'
 import { Typography } from '@mui/material'
-import ModuleLayout from '@/components/layouts/modules/ModuleLayout'
+import ModuleLayout from '../../layouts/modules/ModuleLayout'
 import useTypewriterEffect from '@/shared/hooks/useTypewriterEffect'
 import { colorPalette } from '@/constants/colorPalette'
 import FlexDiv from '@/shared/FlexDiv'
