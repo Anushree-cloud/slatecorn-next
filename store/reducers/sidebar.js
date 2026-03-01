@@ -4,7 +4,7 @@ import { sidebarActions } from '../actions/sidebar'
 import { initialSelectedItem, sideNavigation } from '@/constants/sideNavigation'
 import { ROUTES } from '@/constants/routes'
 
-const routeName = window.location.pathname === '/' ? ROUTES.MAIN_ROUTES.dashboard : window.location.pathname
+const routeName = typeof window !== 'undefined' && window.location.pathname === '/' ? ROUTES.MAIN_ROUTES.dashboard : typeof window !== 'undefined' ? window.location.pathname : '/'
 
 const selectedItem =
 	sideNavigation

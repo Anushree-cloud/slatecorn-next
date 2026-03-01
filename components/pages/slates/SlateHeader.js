@@ -118,8 +118,8 @@ function SlateHeader({ slateId, notes, onViewChange, view }) {
 	const isDisabled = {
 		next: slateIndex === (slates.listing.length - 1),
 		prev: slateIndex === 0,
-		add: view === SLATE_VIEW.slateView || notes.listing.length === 20,
-		delete: view === SLATE_VIEW.slateView || notes.listing.length === 0,
+		add: view === SLATE_VIEW.slateView && notes.listing.length === 20,
+		delete: (view === SLATE_VIEW.slateView) && (notes.listing.length === 0),
 		rearrange: view === SLATE_VIEW.slateView || notes.listing.length === 0 || notes.isRearrange[slateId]
 	}
 
@@ -165,7 +165,9 @@ function SlateHeader({ slateId, notes, onViewChange, view }) {
 							</span>
 						</Tooltip>
 						<Tooltip
-							title={`${slate?.tokens} loved your board!`}
+							title={`${notes.listing?.filter(
+											(noteItem) => noteItem?.slateId === slateId
+										)?.length} notes`}
 							placement="bottom"
 							arrow
 						>

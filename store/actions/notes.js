@@ -29,7 +29,8 @@ export const notesActions = {
 		state.listing = filteredListing
 	},
 	deleteAll: (state, actions) => {
-		state.listing = state.listing.filter(note => note.slateId !== actions.payload.slateId)
+		console.log('Deleting all notes for slateId:',state.listing.filter(note => note.slateId !== actions.payload.slateId))
+		state.listing = []
 	},
 	scaleNote: (state, actions) => {
 		const noteIndex = state.listing.findIndex(

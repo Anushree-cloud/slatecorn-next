@@ -7,7 +7,7 @@ import FlexDiv from '@/shared/FlexDiv'
 import SideNavigation from '@/components/pages/home/SideNavigation'
 import { CircularProgress } from '@mui/material'
 import { ROUTES } from '@/constants/routes'
-import { redirect } from 'next/navigation'
+import { redirect, usePathname } from 'next/navigation'
 import { login, setIsLoggedIn, setLoading } from '@/store/reducers/user'
 import { selectSidebarItem } from '@/store/reducers/sidebar'
 import { initialSelectedItem } from '@/constants/sideNavigation'
@@ -17,6 +17,7 @@ import NextTopLoader from 'nextjs-toploader';
 function AppLayout(props) {
     const dispatch = useDispatch()
     const router = useRouter()
+    const pathname = usePathname()
 
     const {isLoggedIn, isLoading} = useSelector((state) => state.user)
 
@@ -26,7 +27,7 @@ function AppLayout(props) {
         // if(localStorage.getItem('isLoggedIn')){
         //     dispatch(selectSidebarItem(initialSelectedItem))
         // }
-		if(localStorage.getItem('isLoggedIn') && authRoutes.includes(window.location.pathname)) {
+		if(localStorage.getItem('isLoggedIn') && authRoutes.includes(pathname)) {
 			router.push(ROUTES.HOME)
 		}
         dispatch(setIsLoggedIn())
@@ -36,7 +37,7 @@ function AppLayout(props) {
 	return (
 		<>
 			{isLoading ? 
-				<FlexDiv justifyContent='center' customStyle={{ width: window.innerWidth, height: window.innerHeight }}>
+				<FlexDiv justifyContent='center' customStyle={{ width: '100vw', height: '100vh' }}>
 					<CircularProgress />
 				</FlexDiv>
 				:
@@ -44,7 +45,7 @@ function AppLayout(props) {
                     <FlexDiv 
                         justifyContent='flex-start' 
                         alignItems='flex-start' 
-                        customStyle={{ height: window.innerHeight }} 
+                        customStyle={{ height: '100vh' }} 
                         gap={0}
                     >
                         <FlexDiv
